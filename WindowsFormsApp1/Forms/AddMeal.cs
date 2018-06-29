@@ -12,8 +12,13 @@ namespace WindowsFormsApp1
 {
     public partial class AddMeal : Form
     {
-        public BooleanPasser ReturnedBool;
+        internal BooleanPasser ReturnedBool;
+
+        // Field to hold incoming meal in the case of an Edit rather than Add
         internal Meal StarterMeal;
+
+        // Property to set the meal name directly (e.g. adding from filter box)
+        public string MealName { set { this.txtName.Text = System.Globalization.CultureInfo.CurrentCulture.TextInfo.ToTitleCase(value.ToLower()); } }
 
         public AddMeal()
         {
@@ -21,14 +26,13 @@ namespace WindowsFormsApp1
             cboCookTime.DataSource = Meal.CookingTime.GetCookTimes();
         }
 
-        private void ReloadIngredients()
+        private void ReloadIngredients(Func<Ingredient, bool> Pred = null)
         {
+            if (Pred == null) Pred = delegate (Ingredient i) { return !lstUsed.Items.OfType<Ingredient>().ToList<Ingredient>().Contains(i); };
             lstAvailable.Items.Clear();
-            List<Ingredient> used = lstUsed.Items.OfType<Ingredient>().ToList<Ingredient>();
             foreach (var item in Program.db.GetIngredients())
             {
-                if (used.Contains(item)) continue;
-                lstAvailable.Items.Add(item);
+                if (Pred(item)) lstAvailable.Items.Add(item);
             }
         }
 
@@ -43,6 +47,7 @@ namespace WindowsFormsApp1
             if (item == null) return;
             lstUsed.Items.Add(item);
             lstAvailable.Items.Remove(item);
+            textBox1.Text = "";
         }
 
         private void btnRemove_Click(object sender, EventArgs e)
@@ -60,7 +65,11 @@ namespace WindowsFormsApp1
                 lblWarn1.Visible = true;
                 return;
             }
-            if (StarterMeal == null) StarterMeal = new Meal();
+            if (StarterMeal != null)
+            {
+                Program.db.Delete(StarterMeal);
+            }
+            StarterMeal = new Meal();
             StarterMeal.Name = txtName.Text;
             StarterMeal.CookTime = cboCookTime.Text;
             StarterMeal.Ingredients = new List<Ingredient>();
@@ -71,6 +80,7 @@ namespace WindowsFormsApp1
 
             Program.db.Add(StarterMeal);
             ReturnedBool.Value = true;
+            ReturnedBool.Component = StarterMeal; // Passes the new meal back to be used in the Plan if navigated from there
             Close();
         }
 
@@ -83,8 +93,15 @@ namespace WindowsFormsApp1
         {
             BooleanPasser bp = new BooleanPasser();
             AddIngredient addDialog = new AddIngredient { ReturnedBool = bp };
+            addDialog.IngredientName = textBox1.Text;
             addDialog.ShowDialog();
-            if (bp.Value) ReloadIngredients();
+            if (bp.Value) {
+                if (bp.HasComponent)
+                {
+                    lstUsed.Items.Add(bp.Component);
+                    textBox1.Text = "";
+                }
+            }
         }
 
         private void AddMeal_Shown(object sender, EventArgs e)
@@ -99,6 +116,13 @@ namespace WindowsFormsApp1
                 }
             }
             ReloadIngredients();
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+            Func<Ingredient, bool> Pred = null;
+            if (textBox1.Text != "") Pred = delegate (Ingredient i) { return i.Name.ToLower().Contains(textBox1.Text.ToLower()); };
+            ReloadIngredients(Pred);
         }
     }
 }

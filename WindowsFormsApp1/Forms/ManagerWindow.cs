@@ -13,8 +13,38 @@ namespace WindowsFormsApp1
 {
     public partial class ManagerWindow : Form
     {
-        public Func<bool> AddClickMethod = delegate () { MessageBox.Show("Unimplemented!"); return false; };
+
+        internal Predicate<IMealComponent> AddClickMethod = delegate (IMealComponent mc) { MessageBox.Show("Unimplemented!"); return false; };   
+
+        private Predicate<IMealComponent> AddMealDelegate = delegate (IMealComponent m)
+            {
+                BooleanPasser bp = new BooleanPasser();
+                AddMeal addDialog = new AddMeal { ReturnedBool = bp, StarterMeal = (Meal)m };
+                addDialog.ShowDialog();
+                return bp.Value;
+            };
+
+        private Predicate<IMealComponent> AddIngredientDelegate = delegate (IMealComponent i)
+            {
+                BooleanPasser bp = new BooleanPasser();
+                AddIngredient addDialog = new AddIngredient { ReturnedBool = bp, StarterIngredient = (Ingredient)i };
+                addDialog.ShowDialog();
+                return bp.Value;
+            };
+
+        public string ManagerType
+        {
+            get => _managerType;
+            set
+            {
+                _managerType = value;
+                Text = _managerType + " Manager";
+                AddClickMethod = _managerType == "Meals" ? AddMealDelegate : AddIngredientDelegate;
+            }
+        }
+
         private Func<IEnumerable> listBoxDataSource;
+        private string _managerType;
 
         public Func<IEnumerable> GetListBoxDataSource()
         {
@@ -45,7 +75,17 @@ namespace WindowsFormsApp1
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            if (AddClickMethod() == true)
+            if (AddClickMethod(null) == true)
+            {
+                UpdateListBoxes();
+            }
+        }
+
+        private void btnEdit_Click(object sender, EventArgs e)
+        {
+            IMealComponent item = (IMealComponent)listBox1.SelectedItem;
+            if (item == null) return;
+            if (AddClickMethod(item) == true)
             {
                 UpdateListBoxes();
             }
@@ -54,16 +94,25 @@ namespace WindowsFormsApp1
         private void btnDelete_Click(object sender, EventArgs e)
         {
             IMealComponent item = (IMealComponent)listBox1.SelectedItem;
-            if (item != null) {
+            if (item != null)
+            {
                 switch (item.Type())
                 {
-                    case 'I': Program.db.Delete((Ingredient)item); break;
                     case 'M': Program.db.Delete((Meal)item); break;
+                    case 'I': {
+                            if (((Ingredient)item).Meals.Count > 0)
+                            {
+                                if (MessageBox.Show("Are you sure you want to delete an\ningredient that is part of a meal?", "Confirm", MessageBoxButtons.YesNo) == DialogResult.No) { break; };
+                            }
+                            Program.db.Delete((Ingredient)item);
+                            break;
+                        }
                 }
             }
             UpdateListBoxes();
         }
 
+        // When an item is selected, fill the linked items in the other box
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             IMealComponent item = (IMealComponent)listBox1.SelectedItem;
@@ -73,11 +122,6 @@ namespace WindowsFormsApp1
             {
                 listBox2.Items.Add(comp);
             }
-        }
-
-        private void listBox1_DoubleClick(object sender, EventArgs e)
-        {
-
         }
     }
 }

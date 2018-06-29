@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WindowsFormsApp1
 {
-    interface IMealComponent
+    public interface IMealComponent
     {
         char Type();
         IEnumerable<IMealComponent> GetLinkedComponents();

@@ -13,66 +13,79 @@ namespace WindowsFormsApp1.Windows
 {
     public partial class Plan : Form
     {
-        private readonly string[] headers = {"Name", "Cooking Time", "Protein Content", "Carb Content" };
-        private static List<Meal> meals = new List<Meal>();
+        private static readonly string[] headers = {"Name", "Cooking Time", "Protein Content", "Carb Content" };
+        private List<Meal> meals= new List<Meal>();
+        private DataTable dataTable;
+
         public Plan()
         {
             InitializeComponent();
-            InitializeMealList();
+            dataTable = NewDataTable();
+            SetDataGridViewSource(dataTable);
+            FillMealList();
         }
 
-        private void InitializeMealList()
+        private DataTable NewDataTable()
         {
-            for (int i = 0; i < headers.Length; i++)
-            {
-                lstMeals.Columns.Add(new ColumnHeader());
-                lstMeals.Columns[i].Text = headers[i];
-                lstMeals.Columns[i].Width = (i == 0 ? 250 : 150);
-            }
+            DataTable d = new DataTable();
+            for (int i = 0; i < headers.Length; i++) { d.Columns.Add(headers[i]); }
+            return d;
+        }
 
+        private void SetDataGridViewSource(DataTable dataTable, bool sort=true)
+        {
+            this.dataTable = dataTable;
+            dataGridView1.DataSource = dataTable;
+            if (sort) dataGridView1.Sort(dataGridView1.Columns[0], ListSortDirection.Ascending);
+        }
+
+        private void FillMealList(DataTable dt = null)
+        {
+            if (dt == null)
+            {
+                dataTable.Rows.Clear();
+                dt = dataTable;
+            }
             foreach (Meal m in Program.db.GetMeals())
             {
-                lstMeals.Items.Add(ConvertToListViewItem(m));
+                if (!meals.Contains(m)) { AddToTable(dt, m); }
             }
-            
         }
 
-        private ListViewItem ConvertToListViewItem(Meal m)
+        private void AddToTable(DataTable table, Meal m)
         {
-            return new ListViewItem(new string[] {m.Name, m.CookTime, m.GetProtein(), m.GetCarb() });
-        }
-
-        private void lstMeals_ItemDrag(object sender, ItemDragEventArgs e)
-        {
-            DoDragDrop(e.Item, DragDropEffects.Move);
+            DataRow d = table.NewRow();
+            d[0] = m.Name;
+            d[1] = m.CookTime;
+            d[2] = m.GetProtein();
+            d[3] = m.GetCarb();
+            table.Rows.Add(d);
         }
 
         private void GenericDragEnter(object sender, DragEventArgs e)
         {
-            if (e.Data.GetDataPresent (typeof(ListViewItem)))
-            {
-                e.Effect = DragDropEffects.Move;
-            }
+            if (e.Data.GetDataPresent(typeof(string))) { e.Effect = DragDropEffects.Move; }
         }
 
         private void GenericDragDrop(object sender, DragEventArgs e)
         {
-            if (e.Data.GetDataPresent(typeof(ListViewItem)))
+            if (e.Data.GetDataPresent(typeof(string)))
             {
                 Label lbl = ((Label)sender);
-                ListViewItem item = (ListViewItem)e.Data.GetData(typeof(ListViewItem));
-                AddMealToLabel(lbl, item);
+                string mealName = (string)e.Data.GetData(typeof(string));
+                if (lbl.Text != "") { RemoveMealFromPlan(lbl.Text); }
+                AddMealToLabel(lbl, mealName);
+                FillMealList();
             }
         }
 
-        private static void AddMealToLabel(Label lbl, ListViewItem item)
+        private void AddMealToLabel(Label lbl, String MealName)
         {
-            lbl.Text = item.Text;
-            meals.Add(Program.db.GetMeals().Where(meal => meal.Name == lbl.Text).First<Meal>());
-            item.ListView.Items.Remove(item);
+            lbl.Text = MealName;
+            meals.Add(Program.db.GetMeals().Where(meal => meal.Name == MealName).First<Meal>());
         }
 
-        private void GenericDoubleClick(object sender, EventArgs e)
+        private void GenericLabelDoubleClick(object sender, EventArgs e)
         {
             Label ClickedLabel = (Label)sender;
             if (ClickedLabel.Text == "") return;
@@ -83,21 +96,8 @@ namespace WindowsFormsApp1.Windows
         private void RemoveMealFromPlan(String MealName)
         {
             Meal m = Program.db.GetMeals().Where(meal => meal.Name == MealName).First<Meal>();
-            lstMeals.Items.Add(ConvertToListViewItem(m));
+            AddToTable(dataTable, m);
             meals.Remove(m);
-        }
-
-        private void lstMeals_DoubleClick(object sender, EventArgs e)
-        {
-            ListViewItem item = lstMeals.SelectedItems[0]; 
-            IEnumerable<Label> labels = this.Controls.OfType<Label>().Reverse();
-            foreach (Label label in labels)
-            {
-                if (label.Text == "") {
-                    AddMealToLabel(label, item);
-                    return;
-                }
-            }
         }
 
         private void btnAccept_Click(object sender, EventArgs e)
@@ -116,13 +116,100 @@ namespace WindowsFormsApp1.Windows
                     }
                 }
             }
-            List<string> mealnames = meals.ToList<Meal>().ConvertAll<string>(m => m.Name);
+            List<string> mealnames = meals.ToList<Meal>().ConvertAll<string>(meal => meal.Name);
 
             ShoppingList sl = new ShoppingList();
             sl.meals = mealnames;
             sl.ingredients = shopping;
             sl.Show();
             Close();
+        }
+
+        private void btnAdd_Click(object sender, EventArgs e)
+        {
+            BooleanPasser bp = new BooleanPasser();
+            AddMeal addDialog = new AddMeal { ReturnedBool = bp, StarterMeal = null };
+            addDialog.MealName = textBox1.Text;
+            addDialog.ShowDialog();
+            if (bp.Value)
+            {
+                FillMealList();
+                AddMealToPlan(((Meal)bp.Component).Name);
+                textBox1.Text = "";
+            };
+        }
+
+        private void AddMealToPlan(string mealName)
+        {
+            int selectedRow = -1;
+            for (int i = 0; i < dataTable.Rows.Count; i++)
+            {
+                if ((string)dataTable.Rows[i].ItemArray[0] == mealName)
+                {
+                    selectedRow = i;
+                    break;
+                }
+            }
+            if (selectedRow < 0) return;
+
+            IEnumerable<Label> labels = this.Controls.OfType<Label>().Reverse();
+            foreach (Label label in labels)
+            {
+                if (label.Text == "")
+                {
+                    AddMealToLabel(label, mealName);
+                    dataTable.Rows[selectedRow].Delete();
+                    return;
+                }
+            }
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+            DataTable dt = NewDataTable();
+            FillMealList(dt);
+            if (textBox1.Text!="")
+            {
+                for (int i=dt.Rows.Count-1; i>=0; i--)
+                {
+                    if (!((string)dt.Rows[i].ItemArray[0]).ToLower().Contains(textBox1.Text.ToLower())) {
+                        dt.Rows[i].Delete();
+                    }
+                }
+            }
+            SetDataGridViewSource(dt);
+        }
+
+        private void dataGridView1_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left && e.Clicks == 1)
+            {
+                DataGridView.HitTestInfo info = dataGridView1.HitTest(e.X, e.Y);
+                if (info.RowIndex >= 0)
+                {
+                    dataGridView1.Rows[info.RowIndex].Selected = true;
+                    string text = (String)dataGridView1.Rows[info.RowIndex].Cells[0].Value;
+                    if (text != null)
+                    {
+                        dataGridView1.DoDragDrop(text, DragDropEffects.Move);
+                    }
+                }
+            }
+        }
+
+        private void dataGridView1_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                DataGridView.HitTestInfo info = dataGridView1.HitTest(e.X, e.Y);
+                if (info.RowIndex >= 0)
+                {
+                    string mealName = (string)dataGridView1.Rows[info.RowIndex].Cells[0].Value;
+                    AddMealToPlan(mealName);
+                    textBox1.Text = "";
+                    textBox1.Select();
+                }
+            }
         }
     }
 }

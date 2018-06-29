@@ -28,8 +28,24 @@ namespace WindowsFormsApp1.Forms
 
         private void btnShop_Click(object sender, EventArgs e)
         {
+            List<string> Ingredients = ingredients.Keys.ToList<string>();
+            List<String> list = new List<string>();
 
-            Clipboard.SetText(ingredients.Keys.ToList<string>().Aggregate((a,b) => a + ", " + b));
+            string line = "";
+            foreach (string ingredient in Ingredients)
+            {
+                if (line.Length + ingredient.Length < 90)
+                {
+                    line += ingredient + ",";
+                }
+                else
+                {
+                    list.Add(line);
+                    line = "";
+                }
+            }
+            
+            Clipboard.SetText(list.Aggregate((a, b) => a + "\n" + b));
             System.Diagnostics.Process.Start("https://www.tesco.com/groceries/en-GB/multi-search");
         }
     }

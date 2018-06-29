@@ -24,32 +24,46 @@ namespace WindowsFormsApp1
         private void Ingredients_Click(object sender, EventArgs e)
         {
             SharedClickFunctions(
-                "Ingredients Manager",
-                delegate () {
-                    BooleanPasser bp = new BooleanPasser();
-                    AddIngredient addDialog = new AddIngredient { ReturnedBool = bp };
-                    addDialog.ShowDialog();
-                    return bp.Value;
-                },
+                "Ingredients",
                 Program.db.GetIngredients
             );
         }
         
+        private static Func<bool> AddIngredientDelegate()
+        {
+            return delegate ()
+            {
+                BooleanPasser bp = new BooleanPasser();
+                AddIngredient addDialog = new AddIngredient { ReturnedBool = bp };
+                addDialog.ShowDialog();
+                return bp.Value;
+            };
+        }
+
         private void btnMeals_Click(object sender, EventArgs e)
         {
             SharedClickFunctions(
-                "Meals Manager",
-                Meal.GetAddDelegate(null),
+                "Meals",
                 Program.db.GetMeals
             );
         }
 
-        private void SharedClickFunctions(String Caption, Func<bool> ClickMethod, Func<IEnumerable> DataSource)
+        private static Func<bool> AddMealDelegate(Meal m)
+        {
+            return delegate ()
+            {
+                BooleanPasser bp = new BooleanPasser();
+                AddMeal addDialog = new AddMeal { ReturnedBool = bp, StarterMeal = m };
+                addDialog.ShowDialog();
+                return bp.Value;
+            };
+        }
+
+        private void SharedClickFunctions(String ManagerType, Func<IEnumerable> DataSource)
         {
             ManagerWindow mgr = new ManagerWindow
             {
-                Text = Caption,
-                AddClickMethod = ClickMethod
+                ManagerType = ManagerType,
             };
             mgr.SetListBoxDataSource(DataSource);
             mgr.ShowDialog();

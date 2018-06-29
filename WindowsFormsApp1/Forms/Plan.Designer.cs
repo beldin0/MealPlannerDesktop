@@ -28,11 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.ListViewGroup listViewGroup1 = new System.Windows.Forms.ListViewGroup("ListViewGroup", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewGroup listViewGroup2 = new System.Windows.Forms.ListViewGroup("ListViewGroup", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewGroup listViewGroup3 = new System.Windows.Forms.ListViewGroup("ListViewGroup", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewGroup listViewGroup4 = new System.Windows.Forms.ListViewGroup("ListViewGroup", System.Windows.Forms.HorizontalAlignment.Left);
-            this.lstMeals = new System.Windows.Forms.ListView();
             this.lblMonday = new System.Windows.Forms.Label();
             this.lblTuesday = new System.Windows.Forms.Label();
             this.lblWednesday = new System.Windows.Forms.Label();
@@ -48,45 +43,20 @@
             this.txtSaturday = new System.Windows.Forms.Label();
             this.txtSunday = new System.Windows.Forms.Label();
             this.btnAccept = new System.Windows.Forms.Button();
+            this.btnAdd = new System.Windows.Forms.Button();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
-            // 
-            // lstMeals
-            // 
-            this.lstMeals.FullRowSelect = true;
-            this.lstMeals.GridLines = true;
-            listViewGroup1.Header = "ListViewGroup";
-            listViewGroup1.Name = "Name";
-            listViewGroup2.Header = "ListViewGroup";
-            listViewGroup2.Name = "Cooking Time";
-            listViewGroup3.Header = "ListViewGroup";
-            listViewGroup3.Name = "Protein Content";
-            listViewGroup4.Header = "ListViewGroup";
-            listViewGroup4.Name = "Carb Content";
-            this.lstMeals.Groups.AddRange(new System.Windows.Forms.ListViewGroup[] {
-            listViewGroup1,
-            listViewGroup2,
-            listViewGroup3,
-            listViewGroup4});
-            this.lstMeals.LabelWrap = false;
-            this.lstMeals.Location = new System.Drawing.Point(12, 12);
-            this.lstMeals.MultiSelect = false;
-            this.lstMeals.Name = "lstMeals";
-            this.lstMeals.ShowGroups = false;
-            this.lstMeals.Size = new System.Drawing.Size(706, 274);
-            this.lstMeals.Sorting = System.Windows.Forms.SortOrder.Ascending;
-            this.lstMeals.TabIndex = 0;
-            this.lstMeals.UseCompatibleStateImageBehavior = false;
-            this.lstMeals.View = System.Windows.Forms.View.Details;
-            this.lstMeals.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.lstMeals_ItemDrag);
-            this.lstMeals.DoubleClick += new System.EventHandler(this.lstMeals_DoubleClick);
             // 
             // lblMonday
             // 
             this.lblMonday.AutoSize = true;
             this.lblMonday.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblMonday.Location = new System.Drawing.Point(725, 17);
+            this.lblMonday.Location = new System.Drawing.Point(544, 14);
+            this.lblMonday.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblMonday.Name = "lblMonday";
-            this.lblMonday.Size = new System.Drawing.Size(67, 20);
+            this.lblMonday.Size = new System.Drawing.Size(58, 17);
             this.lblMonday.TabIndex = 2;
             this.lblMonday.Text = "Monday";
             // 
@@ -94,9 +64,10 @@
             // 
             this.lblTuesday.AutoSize = true;
             this.lblTuesday.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTuesday.Location = new System.Drawing.Point(725, 57);
+            this.lblTuesday.Location = new System.Drawing.Point(544, 46);
+            this.lblTuesday.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblTuesday.Name = "lblTuesday";
-            this.lblTuesday.Size = new System.Drawing.Size(72, 20);
+            this.lblTuesday.Size = new System.Drawing.Size(63, 17);
             this.lblTuesday.TabIndex = 4;
             this.lblTuesday.Text = "Tuesday";
             // 
@@ -104,9 +75,10 @@
             // 
             this.lblWednesday.AutoSize = true;
             this.lblWednesday.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblWednesday.Location = new System.Drawing.Point(725, 97);
+            this.lblWednesday.Location = new System.Drawing.Point(544, 79);
+            this.lblWednesday.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblWednesday.Name = "lblWednesday";
-            this.lblWednesday.Size = new System.Drawing.Size(96, 20);
+            this.lblWednesday.Size = new System.Drawing.Size(83, 17);
             this.lblWednesday.TabIndex = 6;
             this.lblWednesday.Text = "Wednesday";
             // 
@@ -114,9 +86,10 @@
             // 
             this.lblThursday.AutoSize = true;
             this.lblThursday.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblThursday.Location = new System.Drawing.Point(725, 137);
+            this.lblThursday.Location = new System.Drawing.Point(544, 111);
+            this.lblThursday.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblThursday.Name = "lblThursday";
-            this.lblThursday.Size = new System.Drawing.Size(78, 20);
+            this.lblThursday.Size = new System.Drawing.Size(68, 17);
             this.lblThursday.TabIndex = 8;
             this.lblThursday.Text = "Thursday";
             // 
@@ -124,9 +97,10 @@
             // 
             this.lblFriday.AutoSize = true;
             this.lblFriday.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblFriday.Location = new System.Drawing.Point(725, 177);
+            this.lblFriday.Location = new System.Drawing.Point(544, 144);
+            this.lblFriday.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblFriday.Name = "lblFriday";
-            this.lblFriday.Size = new System.Drawing.Size(55, 20);
+            this.lblFriday.Size = new System.Drawing.Size(47, 17);
             this.lblFriday.TabIndex = 10;
             this.lblFriday.Text = "Friday";
             // 
@@ -134,9 +108,10 @@
             // 
             this.lblSaturday.AutoSize = true;
             this.lblSaturday.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblSaturday.Location = new System.Drawing.Point(725, 217);
+            this.lblSaturday.Location = new System.Drawing.Point(544, 176);
+            this.lblSaturday.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblSaturday.Name = "lblSaturday";
-            this.lblSaturday.Size = new System.Drawing.Size(75, 20);
+            this.lblSaturday.Size = new System.Drawing.Size(65, 17);
             this.lblSaturday.TabIndex = 12;
             this.lblSaturday.Text = "Saturday";
             // 
@@ -144,9 +119,10 @@
             // 
             this.lblSunday.AutoSize = true;
             this.lblSunday.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblSunday.Location = new System.Drawing.Point(725, 257);
+            this.lblSunday.Location = new System.Drawing.Point(544, 209);
+            this.lblSunday.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblSunday.Name = "lblSunday";
-            this.lblSunday.Size = new System.Drawing.Size(64, 20);
+            this.lblSunday.Size = new System.Drawing.Size(56, 17);
             this.lblSunday.TabIndex = 14;
             this.lblSunday.Text = "Sunday";
             // 
@@ -156,13 +132,14 @@
             this.txtMonday.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.txtMonday.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtMonday.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtMonday.Location = new System.Drawing.Point(831, 17);
+            this.txtMonday.Location = new System.Drawing.Point(623, 14);
+            this.txtMonday.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.txtMonday.Name = "txtMonday";
-            this.txtMonday.Size = new System.Drawing.Size(260, 22);
+            this.txtMonday.Size = new System.Drawing.Size(196, 18);
             this.txtMonday.TabIndex = 15;
             this.txtMonday.DragDrop += new System.Windows.Forms.DragEventHandler(this.GenericDragDrop);
             this.txtMonday.DragEnter += new System.Windows.Forms.DragEventHandler(this.GenericDragEnter);
-            this.txtMonday.DoubleClick += new System.EventHandler(this.GenericDoubleClick);
+            this.txtMonday.DoubleClick += new System.EventHandler(this.GenericLabelDoubleClick);
             // 
             // txtTuesday
             // 
@@ -170,13 +147,14 @@
             this.txtTuesday.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.txtTuesday.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtTuesday.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtTuesday.Location = new System.Drawing.Point(831, 57);
+            this.txtTuesday.Location = new System.Drawing.Point(623, 46);
+            this.txtTuesday.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.txtTuesday.Name = "txtTuesday";
-            this.txtTuesday.Size = new System.Drawing.Size(260, 22);
+            this.txtTuesday.Size = new System.Drawing.Size(196, 18);
             this.txtTuesday.TabIndex = 16;
             this.txtTuesday.DragDrop += new System.Windows.Forms.DragEventHandler(this.GenericDragDrop);
             this.txtTuesday.DragEnter += new System.Windows.Forms.DragEventHandler(this.GenericDragEnter);
-            this.txtTuesday.DoubleClick += new System.EventHandler(this.GenericDoubleClick);
+            this.txtTuesday.DoubleClick += new System.EventHandler(this.GenericLabelDoubleClick);
             // 
             // txtWednesday
             // 
@@ -184,13 +162,14 @@
             this.txtWednesday.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.txtWednesday.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtWednesday.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtWednesday.Location = new System.Drawing.Point(831, 95);
+            this.txtWednesday.Location = new System.Drawing.Point(623, 77);
+            this.txtWednesday.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.txtWednesday.Name = "txtWednesday";
-            this.txtWednesday.Size = new System.Drawing.Size(260, 22);
+            this.txtWednesday.Size = new System.Drawing.Size(196, 18);
             this.txtWednesday.TabIndex = 17;
             this.txtWednesday.DragDrop += new System.Windows.Forms.DragEventHandler(this.GenericDragDrop);
             this.txtWednesday.DragEnter += new System.Windows.Forms.DragEventHandler(this.GenericDragEnter);
-            this.txtWednesday.DoubleClick += new System.EventHandler(this.GenericDoubleClick);
+            this.txtWednesday.DoubleClick += new System.EventHandler(this.GenericLabelDoubleClick);
             // 
             // txtThursday
             // 
@@ -198,13 +177,14 @@
             this.txtThursday.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.txtThursday.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtThursday.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtThursday.Location = new System.Drawing.Point(831, 135);
+            this.txtThursday.Location = new System.Drawing.Point(623, 110);
+            this.txtThursday.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.txtThursday.Name = "txtThursday";
-            this.txtThursday.Size = new System.Drawing.Size(260, 22);
+            this.txtThursday.Size = new System.Drawing.Size(196, 18);
             this.txtThursday.TabIndex = 18;
             this.txtThursday.DragDrop += new System.Windows.Forms.DragEventHandler(this.GenericDragDrop);
             this.txtThursday.DragEnter += new System.Windows.Forms.DragEventHandler(this.GenericDragEnter);
-            this.txtThursday.DoubleClick += new System.EventHandler(this.GenericDoubleClick);
+            this.txtThursday.DoubleClick += new System.EventHandler(this.GenericLabelDoubleClick);
             // 
             // txtFriday
             // 
@@ -212,13 +192,14 @@
             this.txtFriday.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.txtFriday.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtFriday.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtFriday.Location = new System.Drawing.Point(831, 177);
+            this.txtFriday.Location = new System.Drawing.Point(623, 144);
+            this.txtFriday.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.txtFriday.Name = "txtFriday";
-            this.txtFriday.Size = new System.Drawing.Size(260, 22);
+            this.txtFriday.Size = new System.Drawing.Size(196, 18);
             this.txtFriday.TabIndex = 19;
             this.txtFriday.DragDrop += new System.Windows.Forms.DragEventHandler(this.GenericDragDrop);
             this.txtFriday.DragEnter += new System.Windows.Forms.DragEventHandler(this.GenericDragEnter);
-            this.txtFriday.DoubleClick += new System.EventHandler(this.GenericDoubleClick);
+            this.txtFriday.DoubleClick += new System.EventHandler(this.GenericLabelDoubleClick);
             // 
             // txtSaturday
             // 
@@ -226,13 +207,14 @@
             this.txtSaturday.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.txtSaturday.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtSaturday.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtSaturday.Location = new System.Drawing.Point(831, 215);
+            this.txtSaturday.Location = new System.Drawing.Point(623, 175);
+            this.txtSaturday.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.txtSaturday.Name = "txtSaturday";
-            this.txtSaturday.Size = new System.Drawing.Size(260, 22);
+            this.txtSaturday.Size = new System.Drawing.Size(196, 18);
             this.txtSaturday.TabIndex = 20;
             this.txtSaturday.DragDrop += new System.Windows.Forms.DragEventHandler(this.GenericDragDrop);
             this.txtSaturday.DragEnter += new System.Windows.Forms.DragEventHandler(this.GenericDragEnter);
-            this.txtSaturday.DoubleClick += new System.EventHandler(this.GenericDoubleClick);
+            this.txtSaturday.DoubleClick += new System.EventHandler(this.GenericLabelDoubleClick);
             // 
             // txtSunday
             // 
@@ -240,30 +222,75 @@
             this.txtSunday.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.txtSunday.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtSunday.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtSunday.Location = new System.Drawing.Point(831, 255);
+            this.txtSunday.Location = new System.Drawing.Point(623, 207);
+            this.txtSunday.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.txtSunday.Name = "txtSunday";
-            this.txtSunday.Size = new System.Drawing.Size(260, 22);
+            this.txtSunday.Size = new System.Drawing.Size(196, 18);
             this.txtSunday.TabIndex = 21;
             this.txtSunday.DragDrop += new System.Windows.Forms.DragEventHandler(this.GenericDragDrop);
             this.txtSunday.DragEnter += new System.Windows.Forms.DragEventHandler(this.GenericDragEnter);
-            this.txtSunday.DoubleClick += new System.EventHandler(this.GenericDoubleClick);
+            this.txtSunday.DoubleClick += new System.EventHandler(this.GenericLabelDoubleClick);
             // 
             // btnAccept
             // 
             this.btnAccept.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnAccept.Location = new System.Drawing.Point(364, 321);
+            this.btnAccept.Location = new System.Drawing.Point(524, 261);
+            this.btnAccept.Margin = new System.Windows.Forms.Padding(2);
             this.btnAccept.Name = "btnAccept";
-            this.btnAccept.Size = new System.Drawing.Size(390, 40);
-            this.btnAccept.TabIndex = 22;
+            this.btnAccept.Size = new System.Drawing.Size(292, 32);
+            this.btnAccept.TabIndex = 2;
             this.btnAccept.Text = "Accept this plan";
             this.btnAccept.UseVisualStyleBackColor = true;
             this.btnAccept.Click += new System.EventHandler(this.btnAccept_Click);
             // 
+            // btnAdd
+            // 
+            this.btnAdd.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnAdd.Location = new System.Drawing.Point(291, 261);
+            this.btnAdd.Margin = new System.Windows.Forms.Padding(2);
+            this.btnAdd.Name = "btnAdd";
+            this.btnAdd.Size = new System.Drawing.Size(174, 32);
+            this.btnAdd.TabIndex = 1;
+            this.btnAdd.Text = "Add Meal";
+            this.btnAdd.UseVisualStyleBackColor = true;
+            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
+            // 
+            // dataGridView1
+            // 
+            this.dataGridView1.AllowUserToAddRows = false;
+            this.dataGridView1.AllowUserToDeleteRows = false;
+            this.dataGridView1.AllowUserToOrderColumns = true;
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Location = new System.Drawing.Point(9, 13);
+            this.dataGridView1.MultiSelect = false;
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.ReadOnly = true;
+            this.dataGridView1.RowHeadersWidth = 50;
+            this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dataGridView1.Size = new System.Drawing.Size(530, 229);
+            this.dataGridView1.TabIndex = 3;
+            this.dataGridView1.TabStop = false;
+            this.dataGridView1.VirtualMode = true;
+            this.dataGridView1.RowHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridView1_MouseDoubleClick);
+            this.dataGridView1.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.dataGridView1_MouseDoubleClick);
+            this.dataGridView1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.dataGridView1_MouseDown);
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(9, 261);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(267, 20);
+            this.textBox1.TabIndex = 0;
+            this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
+            // 
             // Plan
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1103, 387);
+            this.ClientSize = new System.Drawing.Size(827, 314);
+            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.dataGridView1);
+            this.Controls.Add(this.btnAdd);
             this.Controls.Add(this.btnAccept);
             this.Controls.Add(this.txtSunday);
             this.Controls.Add(this.txtSaturday);
@@ -279,17 +306,16 @@
             this.Controls.Add(this.lblWednesday);
             this.Controls.Add(this.lblTuesday);
             this.Controls.Add(this.lblMonday);
-            this.Controls.Add(this.lstMeals);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "Plan";
             this.Text = "Plan";
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-
-        private System.Windows.Forms.ListView lstMeals;
         private System.Windows.Forms.Label lblMonday;
         private System.Windows.Forms.Label lblTuesday;
         private System.Windows.Forms.Label lblWednesday;
@@ -305,5 +331,8 @@
         private System.Windows.Forms.Label txtSaturday;
         private System.Windows.Forms.Label txtSunday;
         private System.Windows.Forms.Button btnAccept;
+        private System.Windows.Forms.Button btnAdd;
+        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.TextBox textBox1;
     }
 }

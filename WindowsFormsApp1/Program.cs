@@ -9,7 +9,7 @@ namespace WindowsFormsApp1
 {
     static class Program
     {
-        public static MealPlannerContext db;
+        internal static MealPlannerContext db;
 
         /// <summary>
         /// The main entry point for the application.
@@ -23,9 +23,10 @@ namespace WindowsFormsApp1
             Application.Run(new MainWindow());
         }
     }
+
     class MealPlannerContext : DbContext
     {
-        public MealPlannerContext() : base(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|Database\Database.mdf;Integrated Security=True;Connect Timeout=30")
+        public MealPlannerContext() : base("Data Source=" + Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\MealPlannerDb\Database.sdf")
         {
             Configuration.LazyLoadingEnabled = false;
             Configuration.ProxyCreationEnabled = true;

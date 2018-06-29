@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WindowsFormsApp1
 {
-    class Ingredient : IMealComponent
+    public class Ingredient : IMealComponent
     {
         [System.ComponentModel.DataAnnotations.Key]
         public int IngredientID { get; set; }

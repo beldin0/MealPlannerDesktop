@@ -6,8 +6,16 @@ using System.Threading.Tasks;
 
 namespace WindowsFormsApp1
 {
-    public class BooleanPasser
+    internal class BooleanPasser
     {
-        public bool Value { get; set; }
+        internal bool Value { get; set; }
+        internal IMealComponent Component { get; set; }
+        internal bool HasComponent
+        {
+            get
+            {
+                return Component != null;
+            }
+        }
     }
 }

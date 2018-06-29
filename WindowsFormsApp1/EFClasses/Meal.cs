@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WindowsFormsApp1
 {
-    partial class Meal : IMealComponent
+    public class Meal : IMealComponent
     {
         [System.ComponentModel.DataAnnotations.Key]
         public int MealID { get; set; }
@@ -44,16 +44,6 @@ namespace WindowsFormsApp1
         {
             List<Ingredient> list = Ingredients;
             return list ?? new List<Ingredient>();
-        }
-
-        internal static Func<bool> GetAddDelegate(Meal m)
-        {
-            return delegate () {
-                BooleanPasser bp = new BooleanPasser();
-                AddMeal addDialog = new AddMeal { ReturnedBool = bp, StarterMeal = m };
-                addDialog.ShowDialog();
-                return bp.Value;
-            };
         }
 
         internal string GetCarb()

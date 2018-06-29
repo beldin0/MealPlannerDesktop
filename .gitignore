@@ -259,3 +259,7 @@ paket-files/
 # Python Tools for Visual Studio (PTVS)
 __pycache__/
 *.pyc
+/WindowsFormsApp1/amd64/Microsoft.VC90.CRT
+/WindowsFormsApp1/amd64
+/WindowsFormsApp1/System.Data.SqlServerCe.Entity.dll
+/WindowsFormsApp1/System.Data.SqlServerCe.dll
