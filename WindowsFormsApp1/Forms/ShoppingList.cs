@@ -13,6 +13,7 @@ namespace MealPlannerApp.Forms
         internal List<string> meals;
         internal Dictionary<string, int> ingredients;
         IWebDriver driver;
+        public Form MyParent { get; set; }
 
         public ShoppingList()
         {
@@ -94,6 +95,7 @@ namespace MealPlannerApp.Forms
                 driver.Quit();
                 driver = null;
             }
+            if (MyParent != null) MyParent.Show();
         }
     }
 }

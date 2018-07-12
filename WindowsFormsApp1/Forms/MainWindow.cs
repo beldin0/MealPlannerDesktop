@@ -25,7 +25,7 @@ namespace MealPlannerApp
         {
             SharedClickFunctions(
                 "Ingredients",
-                Program.db.GetIngredients
+                Program.db.GetIngredients()
             );
         }
         
@@ -35,7 +35,7 @@ namespace MealPlannerApp
             {
                 BooleanPasser bp = new BooleanPasser();
                 AddIngredient addDialog = new AddIngredient { ReturnedBool = bp };
-                addDialog.ShowDialog();
+                addDialog.Show();
                 return bp.Value;
             };
         }
@@ -44,7 +44,7 @@ namespace MealPlannerApp
         {
             SharedClickFunctions(
                 "Meals",
-                Program.db.GetMeals
+                Program.db.GetMeals()
             );
         }
 
@@ -54,25 +54,28 @@ namespace MealPlannerApp
             {
                 BooleanPasser bp = new BooleanPasser();
                 AddMeal addDialog = new AddMeal { ReturnedBool = bp, StarterMeal = m };
-                addDialog.ShowDialog();
+                addDialog.Show();
                 return bp.Value;
             };
         }
 
-        private void SharedClickFunctions(String ManagerType, Func<IEnumerable> DataSource)
+        private void SharedClickFunctions(String ManagerType, IEnumerable DataSource)
         {
-            ManagerWindow mgr = new ManagerWindow
+            Form mgr = new ManagerWindow
             {
                 ManagerType = ManagerType,
+                ListBoxDataSource = DataSource,
+                MyParent = this
             };
-            mgr.SetListBoxDataSource(DataSource);
-            mgr.ShowDialog();
+            mgr.Show();
+            Hide();
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Plan p = new Plan();
-            p.ShowDialog();
+            Form p = new Plan() { MyParent = this };
+            p.Show();
+            Hide();
         }
     }
 }

@@ -105,6 +105,8 @@
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "ManagerWindow";
             this.Text = "Database Manager";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.ManagerWindow_FormClosed);
+            this.Shown += new System.EventHandler(this.ManagerWindow_Shown);
             this.ResumeLayout(false);
 
         }

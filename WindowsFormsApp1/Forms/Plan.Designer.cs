@@ -309,6 +309,7 @@
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "Plan";
             this.Text = "Plan";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Plan_FormClosed);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

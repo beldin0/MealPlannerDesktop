@@ -17,6 +17,8 @@ namespace MealPlannerApp.Windows
         private List<Meal> meals= new List<Meal>();
         private DataTable dataTable;
 
+        public Form MyParent { get; set; }
+
         public Plan()
         {
             InitializeComponent();
@@ -118,11 +120,14 @@ namespace MealPlannerApp.Windows
             }
             List<string> mealnames = meals.ToList<Meal>().ConvertAll<string>(meal => meal.Name);
 
-            ShoppingList sl = new ShoppingList();
-            sl.meals = mealnames;
-            sl.ingredients = shopping;
+            Form sl = new ShoppingList()
+            {
+                meals = mealnames,
+                ingredients = shopping,
+                MyParent = this
+            };
             sl.Show();
-            Close();
+            Hide();
         }
 
         private void btnAdd_Click(object sender, EventArgs e)
@@ -210,6 +215,11 @@ namespace MealPlannerApp.Windows
                     textBox1.Select();
                 }
             }
+        }
+
+        private void Plan_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            if (MyParent != null) MyParent.Show();
         }
     }
 }

@@ -13,6 +13,7 @@ namespace MealPlannerApp
 {
     public partial class ManagerWindow : Form
     {
+        public Form MyParent { get; set; }
 
         internal Predicate<IMealComponent> AddClickMethod = delegate (IMealComponent mc) { MessageBox.Show("Unimplemented!"); return false; };   
 
@@ -43,19 +44,10 @@ namespace MealPlannerApp
             }
         }
 
-        private Func<IEnumerable> listBoxDataSource;
+        private IEnumerable listBoxDataSource;
         private string _managerType;
 
-        public Func<IEnumerable> GetListBoxDataSource()
-        {
-            return listBoxDataSource;
-        }
-
-        public void SetListBoxDataSource(Func<IEnumerable> value)
-        {
-            listBoxDataSource = value;
-            UpdateListBoxes();
-        }
+        public IEnumerable ListBoxDataSource { get; set; }
 
         public ManagerWindow()
         {
@@ -66,8 +58,7 @@ namespace MealPlannerApp
         {
             listBox1.Items.Clear();
             listBox2.Items.Clear();
-            IEnumerable data = GetListBoxDataSource()();
-            foreach (var item in data)
+            foreach (var item in ListBoxDataSource)
             {
                 listBox1.Items.Add(item);
             }
@@ -122,6 +113,16 @@ namespace MealPlannerApp
             {
                 listBox2.Items.Add(comp);
             }
+        }
+
+        private void ManagerWindow_Shown(object sender, EventArgs e)
+        {
+            UpdateListBoxes();
+        }
+
+        private void ManagerWindow_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            if (MyParent != null) MyParent.Show();
         }
     }
 }
