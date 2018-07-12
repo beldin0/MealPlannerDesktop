@@ -1,4 +1,4 @@
-﻿namespace WindowsFormsApp1.Forms
+﻿namespace MealPlannerApp.Forms
 {
     partial class ShoppingList
     {
@@ -36,27 +36,28 @@
             // lstMeals
             // 
             this.lstMeals.FormattingEnabled = true;
-            this.lstMeals.ItemHeight = 16;
-            this.lstMeals.Location = new System.Drawing.Point(53, 39);
+            this.lstMeals.Location = new System.Drawing.Point(40, 32);
+            this.lstMeals.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.lstMeals.Name = "lstMeals";
-            this.lstMeals.Size = new System.Drawing.Size(495, 116);
+            this.lstMeals.Size = new System.Drawing.Size(372, 95);
             this.lstMeals.TabIndex = 0;
             // 
             // lstIngredients
             // 
             this.lstIngredients.FormattingEnabled = true;
-            this.lstIngredients.ItemHeight = 16;
-            this.lstIngredients.Location = new System.Drawing.Point(56, 170);
+            this.lstIngredients.Location = new System.Drawing.Point(42, 138);
+            this.lstIngredients.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.lstIngredients.Name = "lstIngredients";
-            this.lstIngredients.Size = new System.Drawing.Size(492, 260);
+            this.lstIngredients.Size = new System.Drawing.Size(370, 212);
             this.lstIngredients.TabIndex = 1;
             // 
             // btnShop
             // 
             this.btnShop.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnShop.Location = new System.Drawing.Point(202, 450);
+            this.btnShop.Location = new System.Drawing.Point(152, 366);
+            this.btnShop.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnShop.Name = "btnShop";
-            this.btnShop.Size = new System.Drawing.Size(201, 42);
+            this.btnShop.Size = new System.Drawing.Size(151, 34);
             this.btnShop.TabIndex = 2;
             this.btnShop.Text = "Shop!";
             this.btnShop.UseVisualStyleBackColor = true;
@@ -64,14 +65,16 @@
             // 
             // ShoppingList
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(603, 504);
+            this.ClientSize = new System.Drawing.Size(452, 410);
             this.Controls.Add(this.btnShop);
             this.Controls.Add(this.lstIngredients);
             this.Controls.Add(this.lstMeals);
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "ShoppingList";
             this.Text = "Shopping List";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.ShoppingList_FormClosed);
             this.Shown += new System.EventHandler(this.ShoppingList_Shown);
             this.ResumeLayout(false);
 

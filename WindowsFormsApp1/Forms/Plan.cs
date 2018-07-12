@@ -7,9 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using WindowsFormsApp1.Forms;
+using MealPlannerApp.Forms;
 
-namespace WindowsFormsApp1.Windows
+namespace MealPlannerApp.Windows
 {
     public partial class Plan : Form
     {

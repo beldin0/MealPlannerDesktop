@@ -1,4 +1,4 @@
-﻿namespace WindowsFormsApp1
+﻿namespace MealPlannerApp
 {
     partial class ManagerWindow
     {

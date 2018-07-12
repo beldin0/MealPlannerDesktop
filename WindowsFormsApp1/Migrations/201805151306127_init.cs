@@ -1,4 +1,4 @@
-namespace WindowsFormsApp1.Migrations
+namespace MealPlannerApp.Migrations
 {
     using System;
     using System.Data.Entity.Migrations;

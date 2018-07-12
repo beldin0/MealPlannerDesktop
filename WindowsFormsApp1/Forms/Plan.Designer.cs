@@ -1,4 +1,4 @@
-﻿namespace WindowsFormsApp1.Windows
+﻿namespace MealPlannerApp.Windows
 {
     partial class Plan
     {

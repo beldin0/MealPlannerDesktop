@@ -1,18 +1,18 @@
-namespace WindowsFormsApp1.Migrations
+namespace MealPlannerApp.Migrations
 {
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<WindowsFormsApp1.MealPlannerContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<MealPlannerApp.MealPlannerContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
         }
 
-        protected override void Seed(WindowsFormsApp1.MealPlannerContext context)
+        protected override void Seed(MealPlannerApp.MealPlannerContext context)
         {
             //  This method will be called after migrating to the latest version.
 

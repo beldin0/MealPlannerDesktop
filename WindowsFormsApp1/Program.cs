@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.Entity;
 
-namespace WindowsFormsApp1
+namespace MealPlannerApp
 {
     static class Program
     {
