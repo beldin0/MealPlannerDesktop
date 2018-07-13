@@ -85,5 +85,12 @@ namespace MealPlannerApp.Forms
                 if (!e.Cancel) Application.Exit();
             }
         }
+
+        private void btnEveryWeek_Click(object sender, EventArgs e)
+        {
+            Form p = new EveryWeekItems() { MyParent = this };
+            p.Show();
+            Hide();
+        }
     }
 }

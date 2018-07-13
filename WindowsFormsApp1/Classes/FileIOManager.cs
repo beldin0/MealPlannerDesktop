@@ -30,7 +30,7 @@ namespace MealPlannerApp.Classes
             }
         }
 
-        internal void Write(string[] text)
+        internal void Write(IEnumerable<string> text)
         {
             File.WriteAllLines(_path, text);
         }
