@@ -1,4 +1,4 @@
-﻿namespace MealPlannerApp
+﻿namespace MealPlannerApp.Forms
 {
     partial class ManagerWindow
     {
@@ -33,6 +33,7 @@
             this.btnAdd = new System.Windows.Forms.Button();
             this.btnDelete = new System.Windows.Forms.Button();
             this.btnEdit = new System.Windows.Forms.Button();
+            this.btnBack = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // listBox1
@@ -71,7 +72,7 @@
             // btnDelete
             // 
             this.btnDelete.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnDelete.Location = new System.Drawing.Point(183, 231);
+            this.btnDelete.Location = new System.Drawing.Point(261, 231);
             this.btnDelete.Margin = new System.Windows.Forms.Padding(2);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(95, 44);
@@ -83,7 +84,7 @@
             // btnEdit
             // 
             this.btnEdit.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnEdit.Location = new System.Drawing.Point(335, 231);
+            this.btnEdit.Location = new System.Drawing.Point(148, 231);
             this.btnEdit.Margin = new System.Windows.Forms.Padding(2);
             this.btnEdit.Name = "btnEdit";
             this.btnEdit.Size = new System.Drawing.Size(95, 44);
@@ -92,11 +93,24 @@
             this.btnEdit.UseVisualStyleBackColor = true;
             this.btnEdit.Click += new System.EventHandler(this.btnEdit_Click);
             // 
+            // btnBack
+            // 
+            this.btnBack.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnBack.Location = new System.Drawing.Point(477, 231);
+            this.btnBack.Margin = new System.Windows.Forms.Padding(2);
+            this.btnBack.Name = "btnBack";
+            this.btnBack.Size = new System.Drawing.Size(95, 44);
+            this.btnBack.TabIndex = 5;
+            this.btnBack.Text = "Back";
+            this.btnBack.UseVisualStyleBackColor = true;
+            this.btnBack.Click += new System.EventHandler(this.btnBack_Click);
+            // 
             // ManagerWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(600, 310);
+            this.Controls.Add(this.btnBack);
             this.Controls.Add(this.btnEdit);
             this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.btnAdd);
@@ -105,7 +119,7 @@
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "ManagerWindow";
             this.Text = "Database Manager";
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.ManagerWindow_FormClosed);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ManagerWindow_FormClosing);
             this.Shown += new System.EventHandler(this.ManagerWindow_Shown);
             this.ResumeLayout(false);
 
@@ -118,5 +132,6 @@
         private System.Windows.Forms.Button btnAdd;
         private System.Windows.Forms.Button btnDelete;
         private System.Windows.Forms.Button btnEdit;
+        private System.Windows.Forms.Button btnBack;
     }
 }

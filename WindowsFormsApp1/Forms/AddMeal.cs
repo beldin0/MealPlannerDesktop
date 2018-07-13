@@ -1,4 +1,6 @@
-﻿using System;
+﻿using MealPlannerApp.Classes;
+using MealPlannerApp.EFClasses;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -8,7 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace MealPlannerApp
+namespace MealPlannerApp.Forms
 {
     public partial class AddMeal : Form
     {

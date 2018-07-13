@@ -1,4 +1,4 @@
-﻿namespace MealPlannerApp
+﻿namespace MealPlannerApp.Forms
 {
     partial class AddIngredient
     {

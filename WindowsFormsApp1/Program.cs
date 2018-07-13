@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.Entity;
+using MealPlannerApp.EFClasses;
+using MealPlannerApp.Forms;
 
 namespace MealPlannerApp
 {

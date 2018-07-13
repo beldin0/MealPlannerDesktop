@@ -1,8 +1,9 @@
-﻿using System;
+﻿using MealPlannerApp.EFClasses;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 
-namespace MealPlannerApp
+namespace MealPlannerApp.Classes
 {
     public class MealPlannerContext2 : DbContext
     {

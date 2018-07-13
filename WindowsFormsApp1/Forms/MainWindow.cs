@@ -1,16 +1,10 @@
-﻿using System;
+﻿using MealPlannerApp.Classes;
+using MealPlannerApp.EFClasses;
+using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using MealPlannerApp.Windows;
 
-namespace MealPlannerApp
+namespace MealPlannerApp.Forms
 {
     public partial class MainWindow : Form
     {
@@ -28,14 +22,16 @@ namespace MealPlannerApp
                 Program.db.GetIngredients()
             );
         }
-        
+
         private static Func<bool> AddIngredientDelegate()
         {
             return delegate ()
             {
                 BooleanPasser bp = new BooleanPasser();
-                AddIngredient addDialog = new AddIngredient { ReturnedBool = bp };
-                addDialog.Show();
+                using (AddIngredient addDialog = new AddIngredient { ReturnedBool = bp })
+                {
+                    addDialog.Show();
+                }
                 return bp.Value;
             };
         }
@@ -53,8 +49,10 @@ namespace MealPlannerApp
             return delegate ()
             {
                 BooleanPasser bp = new BooleanPasser();
-                AddMeal addDialog = new AddMeal { ReturnedBool = bp, StarterMeal = m };
-                addDialog.Show();
+                using (AddMeal addDialog = new AddMeal { ReturnedBool = bp, StarterMeal = m })
+                {
+                    addDialog.Show();
+                }
                 return bp.Value;
             };
         }
@@ -76,6 +74,16 @@ namespace MealPlannerApp
             Form p = new Plan() { MyParent = this };
             p.Show();
             Hide();
+        }
+
+        private void MainWindow_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (e.CloseReason != CloseReason.ApplicationExitCall)
+            {
+                var confirmation = MessageBox.Show("Are you sure you would like to close MealPlanner?", "Quit Confirmation", MessageBoxButtons.YesNo);
+                e.Cancel = (confirmation == DialogResult.No);
+                if (!e.Cancel) Application.Exit();
+            }
         }
     }
 }

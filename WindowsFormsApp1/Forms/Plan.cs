@@ -1,15 +1,13 @@
-﻿using System;
+﻿using MealPlannerApp.Classes;
+using MealPlannerApp.EFClasses;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using MealPlannerApp.Forms;
 
-namespace MealPlannerApp.Windows
+namespace MealPlannerApp.Forms
 {
     public partial class Plan : Form
     {
@@ -217,9 +215,21 @@ namespace MealPlannerApp.Windows
             }
         }
 
-        private void Plan_FormClosed(object sender, FormClosedEventArgs e)
+        private void btnBack_Click(object sender, EventArgs e)
         {
             if (MyParent != null) MyParent.Show();
+            DialogResult = DialogResult.OK;
+            Close();
+        }
+
+        private void Plan_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (e.CloseReason != CloseReason.ApplicationExitCall && DialogResult != DialogResult.OK)
+            {
+                var confirmation = MessageBox.Show("Are you sure you would like to close MealPlanner?", "Quit Confirmation", MessageBoxButtons.YesNo);
+                e.Cancel = (confirmation == DialogResult.No);
+                if (!e.Cancel) Application.Exit();
+            }
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace MealPlannerApp.Windows
+﻿namespace MealPlannerApp.Forms
 {
     partial class Plan
     {
@@ -46,6 +46,7 @@
             this.btnAdd = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.textBox1 = new System.Windows.Forms.TextBox();
+            this.btnBack = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -234,10 +235,10 @@
             // btnAccept
             // 
             this.btnAccept.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnAccept.Location = new System.Drawing.Point(524, 261);
+            this.btnAccept.Location = new System.Drawing.Point(623, 255);
             this.btnAccept.Margin = new System.Windows.Forms.Padding(2);
             this.btnAccept.Name = "btnAccept";
-            this.btnAccept.Size = new System.Drawing.Size(292, 32);
+            this.btnAccept.Size = new System.Drawing.Size(193, 44);
             this.btnAccept.TabIndex = 2;
             this.btnAccept.Text = "Accept this plan";
             this.btnAccept.UseVisualStyleBackColor = true;
@@ -246,10 +247,10 @@
             // btnAdd
             // 
             this.btnAdd.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnAdd.Location = new System.Drawing.Point(291, 261);
+            this.btnAdd.Location = new System.Drawing.Point(291, 255);
             this.btnAdd.Margin = new System.Windows.Forms.Padding(2);
             this.btnAdd.Name = "btnAdd";
-            this.btnAdd.Size = new System.Drawing.Size(174, 32);
+            this.btnAdd.Size = new System.Drawing.Size(112, 44);
             this.btnAdd.TabIndex = 1;
             this.btnAdd.Text = "Add Meal";
             this.btnAdd.UseVisualStyleBackColor = true;
@@ -283,11 +284,24 @@
             this.textBox1.TabIndex = 0;
             this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
+            // btnBack
+            // 
+            this.btnBack.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnBack.Location = new System.Drawing.Point(444, 255);
+            this.btnBack.Margin = new System.Windows.Forms.Padding(2);
+            this.btnBack.Name = "btnBack";
+            this.btnBack.Size = new System.Drawing.Size(95, 44);
+            this.btnBack.TabIndex = 22;
+            this.btnBack.Text = "Back";
+            this.btnBack.UseVisualStyleBackColor = true;
+            this.btnBack.Click += new System.EventHandler(this.btnBack_Click);
+            // 
             // Plan
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(827, 314);
+            this.Controls.Add(this.btnBack);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.btnAdd);
@@ -309,7 +323,7 @@
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "Plan";
             this.Text = "Plan";
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Plan_FormClosed);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Plan_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -335,5 +349,6 @@
         private System.Windows.Forms.Button btnAdd;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Button btnBack;
     }
 }

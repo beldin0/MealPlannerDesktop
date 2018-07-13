@@ -1,15 +1,10 @@
-﻿using System;
+﻿using MealPlannerApp.Classes;
+using MealPlannerApp.EFClasses;
+using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace MealPlannerApp
+namespace MealPlannerApp.Forms
 {
     public partial class ManagerWindow : Form
     {
@@ -44,7 +39,6 @@ namespace MealPlannerApp
             }
         }
 
-        private IEnumerable listBoxDataSource;
         private string _managerType;
 
         public IEnumerable ListBoxDataSource { get; set; }
@@ -120,9 +114,21 @@ namespace MealPlannerApp
             UpdateListBoxes();
         }
 
-        private void ManagerWindow_FormClosed(object sender, FormClosedEventArgs e)
+        private void ManagerWindow_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (e.CloseReason != CloseReason.ApplicationExitCall && DialogResult != DialogResult.OK)
+            {
+                var confirmation = MessageBox.Show("Are you sure you would like to close MealPlanner?", "Quit Confirmation", MessageBoxButtons.YesNo);
+                e.Cancel = (confirmation == DialogResult.No);
+                if (!e.Cancel) Application.Exit();
+            }
+        }
+
+        private void btnBack_Click(object sender, EventArgs e)
         {
             if (MyParent != null) MyParent.Show();
+            DialogResult = DialogResult.OK;
+            Close();
         }
     }
 }

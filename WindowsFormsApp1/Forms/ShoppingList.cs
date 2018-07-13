@@ -95,7 +95,23 @@ namespace MealPlannerApp.Forms
                 driver.Quit();
                 driver = null;
             }
+        }
+
+        private void btnBack_Click(object sender, EventArgs e)
+        {
             if (MyParent != null) MyParent.Show();
+            DialogResult = DialogResult.OK;
+            Close();
+        }
+
+        private void ShoppingList_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (e.CloseReason != CloseReason.ApplicationExitCall && DialogResult != DialogResult.OK)
+            {
+                var confirmation = MessageBox.Show("Are you sure you would like to close MealPlanner?", "Quit Confirmation", MessageBoxButtons.YesNo);
+                e.Cancel = (confirmation == DialogResult.No);
+                if (!e.Cancel) Application.Exit();
+            }
         }
     }
 }

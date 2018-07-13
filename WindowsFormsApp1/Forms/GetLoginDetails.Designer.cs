@@ -37,9 +37,10 @@
             // 
             // btnOk
             // 
-            this.btnOk.Location = new System.Drawing.Point(168, 128);
+            this.btnOk.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
+            this.btnOk.Location = new System.Drawing.Point(168, 110);
             this.btnOk.Name = "btnOk";
-            this.btnOk.Size = new System.Drawing.Size(75, 23);
+            this.btnOk.Size = new System.Drawing.Size(103, 41);
             this.btnOk.TabIndex = 0;
             this.btnOk.Text = "Ok";
             this.btnOk.UseVisualStyleBackColor = true;
@@ -47,33 +48,37 @@
             // 
             // txtName
             // 
-            this.txtName.Location = new System.Drawing.Point(168, 40);
+            this.txtName.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
+            this.txtName.Location = new System.Drawing.Point(168, 32);
             this.txtName.Name = "txtName";
-            this.txtName.Size = new System.Drawing.Size(155, 20);
+            this.txtName.Size = new System.Drawing.Size(155, 29);
             this.txtName.TabIndex = 1;
             // 
             // txtPass
             // 
-            this.txtPass.Location = new System.Drawing.Point(168, 75);
+            this.txtPass.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
+            this.txtPass.Location = new System.Drawing.Point(168, 67);
             this.txtPass.Name = "txtPass";
-            this.txtPass.Size = new System.Drawing.Size(155, 20);
+            this.txtPass.Size = new System.Drawing.Size(155, 29);
             this.txtPass.TabIndex = 2;
             // 
             // lblName
             // 
             this.lblName.AutoSize = true;
-            this.lblName.Location = new System.Drawing.Point(66, 40);
+            this.lblName.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
+            this.lblName.Location = new System.Drawing.Point(66, 32);
             this.lblName.Name = "lblName";
-            this.lblName.Size = new System.Drawing.Size(55, 13);
+            this.lblName.Size = new System.Drawing.Size(97, 24);
             this.lblName.TabIndex = 3;
             this.lblName.Text = "Username";
             // 
             // lblPassword
             // 
             this.lblPassword.AutoSize = true;
-            this.lblPassword.Location = new System.Drawing.Point(66, 82);
+            this.lblPassword.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
+            this.lblPassword.Location = new System.Drawing.Point(66, 74);
             this.lblPassword.Name = "lblPassword";
-            this.lblPassword.Size = new System.Drawing.Size(53, 13);
+            this.lblPassword.Size = new System.Drawing.Size(92, 24);
             this.lblPassword.TabIndex = 4;
             this.lblPassword.Text = "Password";
             // 

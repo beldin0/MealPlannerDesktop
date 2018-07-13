@@ -1,4 +1,4 @@
-﻿namespace MealPlannerApp
+﻿namespace MealPlannerApp.Forms
 {
     partial class AddMeal
     {
@@ -51,7 +51,7 @@
             // 
             this.lstAvailable.FormattingEnabled = true;
             this.lstAvailable.Location = new System.Drawing.Point(16, 110);
-            this.lstAvailable.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.lstAvailable.Margin = new System.Windows.Forms.Padding(2);
             this.lstAvailable.Name = "lstAvailable";
             this.lstAvailable.Size = new System.Drawing.Size(230, 199);
             this.lstAvailable.Sorted = true;
@@ -84,7 +84,7 @@
             // 
             this.lstUsed.FormattingEnabled = true;
             this.lstUsed.Location = new System.Drawing.Point(359, 110);
-            this.lstUsed.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.lstUsed.Margin = new System.Windows.Forms.Padding(2);
             this.lstUsed.Name = "lstUsed";
             this.lstUsed.Size = new System.Drawing.Size(230, 199);
             this.lstUsed.Sorted = true;
@@ -119,7 +119,7 @@
             // 
             this.txtName.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtName.Location = new System.Drawing.Point(176, 41);
-            this.txtName.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtName.Margin = new System.Windows.Forms.Padding(2);
             this.txtName.Name = "txtName";
             this.txtName.Size = new System.Drawing.Size(384, 29);
             this.txtName.TabIndex = 9;
@@ -128,17 +128,17 @@
             // 
             this.cboCookTime.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cboCookTime.FormattingEnabled = true;
-            this.cboCookTime.Location = new System.Drawing.Point(451, 323);
-            this.cboCookTime.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.cboCookTime.Location = new System.Drawing.Point(408, 323);
+            this.cboCookTime.Margin = new System.Windows.Forms.Padding(2);
             this.cboCookTime.Name = "cboCookTime";
-            this.cboCookTime.Size = new System.Drawing.Size(138, 32);
+            this.cboCookTime.Size = new System.Drawing.Size(181, 32);
             this.cboCookTime.TabIndex = 12;
             // 
             // label4
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(316, 323);
+            this.label4.Location = new System.Drawing.Point(276, 323);
             this.label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(128, 24);
@@ -149,7 +149,7 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(344, 368);
+            this.label5.Location = new System.Drawing.Point(304, 368);
             this.label5.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(99, 24);
@@ -161,18 +161,18 @@
             // 
             this.cboType.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cboType.FormattingEnabled = true;
-            this.cboType.Location = new System.Drawing.Point(450, 368);
-            this.cboType.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.cboType.Location = new System.Drawing.Point(407, 368);
+            this.cboType.Margin = new System.Windows.Forms.Padding(2);
             this.cboType.Name = "cboType";
-            this.cboType.Size = new System.Drawing.Size(138, 32);
+            this.cboType.Size = new System.Drawing.Size(181, 32);
             this.cboType.TabIndex = 14;
             this.cboType.Visible = false;
             // 
             // btnCancel
             // 
             this.btnCancel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCancel.Location = new System.Drawing.Point(494, 409);
-            this.btnCancel.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnCancel.Location = new System.Drawing.Point(190, 409);
+            this.btnCancel.Margin = new System.Windows.Forms.Padding(2);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(95, 40);
             this.btnCancel.TabIndex = 17;
@@ -183,8 +183,8 @@
             // btnOk
             // 
             this.btnOk.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnOk.Location = new System.Drawing.Point(359, 409);
-            this.btnOk.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnOk.Location = new System.Drawing.Point(327, 409);
+            this.btnOk.Margin = new System.Windows.Forms.Padding(2);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(95, 40);
             this.btnOk.TabIndex = 16;
@@ -196,7 +196,7 @@
             // 
             this.btnAdd.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnAdd.Location = new System.Drawing.Point(267, 154);
-            this.btnAdd.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnAdd.Margin = new System.Windows.Forms.Padding(2);
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.Size = new System.Drawing.Size(73, 40);
             this.btnAdd.TabIndex = 18;
@@ -208,7 +208,7 @@
             // 
             this.btnRemove.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnRemove.Location = new System.Drawing.Point(267, 239);
-            this.btnRemove.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnRemove.Margin = new System.Windows.Forms.Padding(2);
             this.btnRemove.Name = "btnRemove";
             this.btnRemove.Size = new System.Drawing.Size(73, 40);
             this.btnRemove.TabIndex = 19;
@@ -220,7 +220,7 @@
             // 
             this.btnAddIngredient.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnAddIngredient.Location = new System.Drawing.Point(151, 363);
-            this.btnAddIngredient.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnAddIngredient.Margin = new System.Windows.Forms.Padding(2);
             this.btnAddIngredient.Name = "btnAddIngredient";
             this.btnAddIngredient.Size = new System.Drawing.Size(95, 29);
             this.btnAddIngredient.TabIndex = 20;
@@ -258,7 +258,7 @@
             this.Controls.Add(this.lstUsed);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.lstAvailable);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "AddMeal";
             this.Text = "Add Meal";
             this.Shown += new System.EventHandler(this.AddMeal_Shown);
