@@ -130,6 +130,11 @@ namespace MealPlannerApp.Forms
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
+            AddNewMeal();
+        }
+
+        private void AddNewMeal()
+        {
             BooleanPasser bp = new BooleanPasser();
             AddMeal addDialog = new AddMeal { ReturnedBool = bp, StarterMeal = null };
             addDialog.MealName = textBox1.Text;
@@ -165,22 +170,6 @@ namespace MealPlannerApp.Forms
                     return;
                 }
             }
-        }
-
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-            DataTable dt = NewDataTable();
-            FillMealList(dt);
-            if (textBox1.Text!="")
-            {
-                for (int i=dt.Rows.Count-1; i>=0; i--)
-                {
-                    if (!((string)dt.Rows[i].ItemArray[0]).ToLower().Contains(textBox1.Text.ToLower())) {
-                        dt.Rows[i].Delete();
-                    }
-                }
-            }
-            SetDataGridViewSource(dt);
         }
 
         private void dataGridView1_MouseDown(object sender, MouseEventArgs e)
@@ -229,6 +218,40 @@ namespace MealPlannerApp.Forms
                 var confirmation = MessageBox.Show("Are you sure you would like to close MealPlanner?", "Quit Confirmation", MessageBoxButtons.YesNo);
                 e.Cancel = (confirmation == DialogResult.No);
                 if (!e.Cancel) Application.Exit();
+            }
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+            DataTable dt = NewDataTable();
+            FillMealList(dt);
+            if (textBox1.Text != "")
+            {
+                for (int i = dt.Rows.Count - 1; i >= 0; i--)
+                {
+                    if (!((string)dt.Rows[i].ItemArray[0]).ToLower().Contains(textBox1.Text.ToLower()))
+                    {
+                        dt.Rows[i].Delete();
+                    }
+                }
+            }
+            SetDataGridViewSource(dt);
+        }
+
+        private void textBox1_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                DataTable dt = (DataTable)dataGridView1.DataSource;
+                if (dt.Rows.Count == 1)
+                {
+                    AddMealToPlan((string)dt.Rows[0].ItemArray[0]);
+                    textBox1.Text = "";
+                }
+                else if (dt.Rows.Count == 0)
+                {
+                    AddNewMeal();
+                }
             }
         }
     }
