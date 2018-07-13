@@ -28,7 +28,10 @@ namespace MealPlannerApp.Forms
 
         private void btnShop_Click(object sender, EventArgs e)
         {
-            List<string> list = GetShoppingList();
+            List<string> list = new List<string>();
+            FillShoppingList(list, ingredients.Keys);
+            FileIOManager fm = new FileIOManager("every week.txt");
+            FillShoppingList(list, fm.Read());
             using (LoginDetails login = LoginDetailsManager.GetLoginDetails())
             {
                 if (login == null) return;
@@ -57,13 +60,10 @@ namespace MealPlannerApp.Forms
             }
         }
 
-        private List<string> GetShoppingList()
+        private void FillShoppingList(List<string> list, IEnumerable<string> items)
         {
-            List<string> Ingredients = ingredients.Keys.ToList();
-            List<string> list = new List<string>();
-
             string line = "";
-            foreach (string ingredient in Ingredients)
+            foreach (string ingredient in items)
             {
                 if (line.Length + ingredient.Length < 90)
                 {
@@ -76,7 +76,6 @@ namespace MealPlannerApp.Forms
                 }
             }
             if (line != "") list.Add(line);
-            return list;
         }
 
         private IWebDriver getDriver()

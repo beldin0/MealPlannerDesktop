@@ -91,6 +91,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\FileIOManager.cs" />
     <Compile Include="Classes\LoginDetails.cs" />
     <Compile Include="Classes\LoginDetailsManager.cs" />
     <Compile Include="Forms\AddIngredient.cs">

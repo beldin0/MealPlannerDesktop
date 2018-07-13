@@ -1,28 +1,23 @@
 ﻿using MealPlannerApp.Forms;
 using System;
-using System.IO;
 using System.Windows.Forms;
 
 namespace MealPlannerApp.Classes
 {
     internal static class LoginDetailsManager
     {
-        private static readonly string folder = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\MealPlannerDb\";
         private static readonly string file = "logindetails.txt";
-        private static readonly string path = folder + file;
 
         public static LoginDetails GetLoginDetails()
         {
             LoginDetails details = null;
-            if (File.Exists(path))
+            FileIOManager fm = new FileIOManager(file);
+            string[] text = fm.Read();
+            if (isValidStringArray(text))
             {
-                string[] text = File.ReadAllLines(path);
-                if (isValidStringArray(text))
-                {
-                    string username = text[0];
-                    string password = text[1];
-                    details = new LoginDetails(username, password);
-                }
+                string username = text[0];
+                string password = text[1];
+                details = new LoginDetails(username, password);
             }
             if (details == null)
             {
@@ -31,7 +26,7 @@ namespace MealPlannerApp.Classes
                 getLogin.ShowDialog();
                 if (details != null)
                 {
-                    File.WriteAllLines(path, details.AsStringArray());
+                    fm.Write(details.AsStringArray());
                 }
             }
             return details;
