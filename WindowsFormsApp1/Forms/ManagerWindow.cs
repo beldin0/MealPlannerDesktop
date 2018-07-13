@@ -2,6 +2,7 @@
 using MealPlannerApp.EFClasses;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace MealPlannerApp.Forms
@@ -50,12 +51,15 @@ namespace MealPlannerApp.Forms
 
         private void UpdateListBoxes()
         {
-            listBox1.Items.Clear();
+            listBox1.DataSource = null;
             listBox2.Items.Clear();
-            foreach (var item in ListBoxDataSource)
+            List<IMealComponent> list = new List<IMealComponent>();
+            foreach (IMealComponent item in ListBoxDataSource)
             {
-                listBox1.Items.Add(item);
+                list.Add(item);
             }
+            list.Sort();
+            listBox1.DataSource = list;
         }
 
         private void btnAdd_Click(object sender, EventArgs e)

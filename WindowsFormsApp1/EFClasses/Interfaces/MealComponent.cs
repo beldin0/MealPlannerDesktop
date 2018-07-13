@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MealPlannerApp
 {
-    public interface IMealComponent
+    public interface IMealComponent : IComparable
     {
         char Type();
         IEnumerable<IMealComponent> GetLinkedComponents();

@@ -80,5 +80,15 @@ namespace MealPlannerApp.EFClasses
                 return new List<string>(new string[] { UNDER_TWENTY_MINUTES, UNDER_FORTY_MINUTES, UNDER_AN_HOUR, OVER_AN_HOUR });
             }
         }
+
+        public int CompareTo(object obj)
+        {
+            if (obj.GetType() != GetType())
+            {
+                return 0;
+            };
+            Meal iObj = (Meal)obj;
+            return Name.CompareTo(iObj.Name);
+        }
     }
 }

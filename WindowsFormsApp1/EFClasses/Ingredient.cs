@@ -55,6 +55,15 @@ namespace MealPlannerApp.EFClasses
         {
             return Meals ?? new List<Meal>();
         }
+
+        public int CompareTo(object obj)
+        {
+            if (obj.GetType() != GetType()) {
+                return 0;
+            };
+            Ingredient iObj = (Ingredient)obj;
+            return Name.CompareTo(iObj.Name);
+        }
     }
 }
 
