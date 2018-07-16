@@ -14,13 +14,13 @@ namespace MealPlannerApp.Forms
 {
     public partial class AddIngredient : Form
     {
-        internal BooleanPasser ReturnedBool;
+        internal BoolWrapper ReturnedBool;
 
         // Field to hold incoming ingredient in the case of an Edit rather than Add
         internal Ingredient StarterIngredient;
 
         // Property to set the ingredient name directly (e.g. adding from filter box)
-        internal string IngredientName { set { this.txtName.Text = System.Globalization.CultureInfo.CurrentCulture.TextInfo.ToTitleCase(value.ToLower()); } }
+        internal string IngredientName { set { txtName.Text = value.ToProper(); } }
 
         public AddIngredient()
         {
@@ -48,20 +48,17 @@ namespace MealPlannerApp.Forms
                 return;
             }
 
-            if (StarterIngredient == null)
+            if (StarterIngredient.Name == null)
             {
-                StarterIngredient = new Ingredient() {
-                    Name = txtName.Text,
-                    DefaultQuantityType = txtUnits.Text==""? null : txtUnits.Text,
-                    IsCarb = chkCarb.Checked,
-                    IsProtein = chkProtein.Checked
-                };
+                StarterIngredient.Name = txtName.Text.ToProper();
+                StarterIngredient.DefaultQuantityType = txtUnits.Text == "" ? null : txtUnits.Text;
+                StarterIngredient.IsCarb = chkCarb.Checked;
+                StarterIngredient.IsProtein = chkProtein.Checked;
                 Program.db.Add(StarterIngredient);
-                ReturnedBool.Component = StarterIngredient; // Passes the new ingredient back to be used in the meal if navigated from there
             }
             else
             {
-                StarterIngredient.Name = txtName.Text;
+                StarterIngredient.Name = txtName.Text.ToProper();
                 StarterIngredient.DefaultQuantityType = txtUnits.Text == "" ? null : txtUnits.Text;
                 StarterIngredient.IsCarb = chkCarb.Checked;
                 StarterIngredient.IsProtein = chkProtein.Checked;
@@ -73,7 +70,7 @@ namespace MealPlannerApp.Forms
 
         private void AddIngredient_Shown(object sender, EventArgs e)
         {
-            if (StarterIngredient != null)
+            if (StarterIngredient.Name != null)
             {
                 Text = "Edit Ingredient";
                 txtName.Text = StarterIngredient.Name;

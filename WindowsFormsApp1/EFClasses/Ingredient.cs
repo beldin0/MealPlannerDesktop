@@ -16,15 +16,22 @@ namespace MealPlannerApp.EFClasses
         public bool IsProtein { get; set; }
 
         public virtual List<Meal> Meals { get; set; }
+        public static Ingredient NULL
+        {
+            get
+            {
+                return new Ingredient() { Name = null };
+            }
+        }
 
         public char Type() { return 'I'; }
 
         public override string ToString()
         {
-            if (Meals==null) Program.db.Entry(this).Collection("Meals").Load();
+            if (Meals == null) Program.db.Entry(this).Collection("Meals").Load();
             string value = Name;
             value += DefaultQuantityType == null ? "" : " (" + DefaultQuantityType + ")";
-            value += (IsCarb? " [C]" : IsProtein? " [P]" : "");
+            value += (IsCarb ? " [C]" : IsProtein ? " [P]" : "");
             return value;
         }
 
@@ -58,7 +65,8 @@ namespace MealPlannerApp.EFClasses
 
         public int CompareTo(object obj)
         {
-            if (obj.GetType() != GetType()) {
+            if (obj.GetType() != GetType())
+            {
                 return 0;
             };
             Ingredient iObj = (Ingredient)obj;

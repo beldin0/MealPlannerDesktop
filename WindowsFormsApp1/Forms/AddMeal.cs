@@ -14,13 +14,13 @@ namespace MealPlannerApp.Forms
 {
     public partial class AddMeal : Form
     {
-        internal BooleanPasser ReturnedBool;
+        internal BoolWrapper ReturnedBool;
 
         // Field to hold incoming meal in the case of an Edit rather than Add
         internal Meal StarterMeal;
 
         // Property to set the meal name directly (e.g. adding from filter box)
-        public string MealName { set { this.txtName.Text = System.Globalization.CultureInfo.CurrentCulture.TextInfo.ToTitleCase(value.ToLower()); } }
+        public string MealName { set { this.txtName.Text = value.ToProper(); } }
 
         public AddMeal()
         {
@@ -67,11 +67,10 @@ namespace MealPlannerApp.Forms
                 lblWarn1.Visible = true;
                 return;
             }
-            if (StarterMeal != null)
+            if (StarterMeal.Name != null)
             {
                 Program.db.Delete(StarterMeal);
             }
-            StarterMeal = new Meal();
             StarterMeal.Name = txtName.Text;
             StarterMeal.CookTime = cboCookTime.Text;
             StarterMeal.Ingredients = new List<Ingredient>();
@@ -82,7 +81,6 @@ namespace MealPlannerApp.Forms
 
             Program.db.Add(StarterMeal);
             ReturnedBool.Value = true;
-            ReturnedBool.Component = StarterMeal; // Passes the new meal back to be used in the Plan if navigated from there
             Close();
         }
 
@@ -93,22 +91,19 @@ namespace MealPlannerApp.Forms
 
         private void btnAddIngredient_Click(object sender, EventArgs e)
         {
-            BooleanPasser bp = new BooleanPasser();
-            AddIngredient addDialog = new AddIngredient { ReturnedBool = bp };
-            addDialog.IngredientName = textBox1.Text;
-            addDialog.ShowDialog();
-            if (bp.Value) {
-                if (bp.HasComponent)
-                {
-                    lstUsed.Items.Add(bp.Component);
-                    textBox1.Text = "";
-                }
+            BoolWrapper Bool = new BoolWrapper();
+            Ingredient ingredient = Ingredient.NULL;
+            new AddIngredient { ReturnedBool = Bool, StarterIngredient = ingredient, IngredientName = textBox1.Text }.ShowDialog();
+            if (Bool)
+            {
+                lstUsed.Items.Add(ingredient);
+                textBox1.Text = "";
             }
         }
 
         private void AddMeal_Shown(object sender, EventArgs e)
         {
-            if (StarterMeal != null)
+            if (StarterMeal.Name != null)
             {
                 txtName.Text = StarterMeal.Name;
                 cboCookTime.Text = StarterMeal.CookTime;

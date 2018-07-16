@@ -27,12 +27,12 @@ namespace MealPlannerApp.Forms
         {
             return delegate ()
             {
-                BooleanPasser bp = new BooleanPasser();
-                using (AddIngredient addDialog = new AddIngredient { ReturnedBool = bp })
+                BoolWrapper Bool = new BoolWrapper();
+                using (AddIngredient addDialog = new AddIngredient { ReturnedBool = Bool })
                 {
                     addDialog.Show();
                 }
-                return bp.Value;
+                return Bool;
             };
         }
 
@@ -48,12 +48,12 @@ namespace MealPlannerApp.Forms
         {
             return delegate ()
             {
-                BooleanPasser bp = new BooleanPasser();
-                using (AddMeal addDialog = new AddMeal { ReturnedBool = bp, StarterMeal = m })
+                BoolWrapper Bool = new BoolWrapper();
+                using (AddMeal addDialog = new AddMeal { ReturnedBool = Bool, StarterMeal = m })
                 {
                     addDialog.Show();
                 }
-                return bp.Value;
+                return Bool;
             };
         }
 
@@ -80,8 +80,7 @@ namespace MealPlannerApp.Forms
         {
             if (e.CloseReason != CloseReason.ApplicationExitCall)
             {
-                var confirmation = MessageBox.Show("Are you sure you would like to close MealPlanner?", "Quit Confirmation", MessageBoxButtons.YesNo);
-                e.Cancel = (confirmation == DialogResult.No);
+                e.Cancel = (ExtensionMethods.QuitDialog() == DialogResult.No);
                 if (!e.Cancel) Application.Exit();
             }
         }

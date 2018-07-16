@@ -46,7 +46,7 @@ namespace MealPlannerApp.Forms
         {
             if (txtNewItem.Text != "")
             {
-                list.Add(txtNewItem.Text);
+                list.Add(txtNewItem.Text.ToProper());
                 txtNewItem.Text = "";
                 lstItems.DataSource = null;
                 lstItems.DataSource = list;

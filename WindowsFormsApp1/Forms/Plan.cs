@@ -11,99 +11,131 @@ namespace MealPlannerApp.Forms
 {
     public partial class Plan : Form
     {
-        private static readonly string[] headers = {"Name", "Cooking Time", "Protein Content", "Carb Content" };
-        private List<Meal> meals= new List<Meal>();
-        private DataTable dataTable;
-
         public Form MyParent { get; set; }
+        private List<Meal> plan = new List<Meal>();
+        private DataTable dataTable;
+        private IEnumerable<Meal> Meals;
 
         public Plan()
         {
             InitializeComponent();
-            dataTable = NewDataTable();
-            SetDataGridViewSource(dataTable);
             FillMealList();
-        }
-
-        private DataTable NewDataTable()
-        {
-            DataTable d = new DataTable();
-            for (int i = 0; i < headers.Length; i++) { d.Columns.Add(headers[i]); }
-            return d;
-        }
-
-        private void SetDataGridViewSource(DataTable dataTable, bool sort=true)
-        {
-            this.dataTable = dataTable;
             dataGridView1.DataSource = dataTable;
-            if (sort) dataGridView1.Sort(dataGridView1.Columns[0], ListSortDirection.Ascending);
+            dataGridView1.Sort(dataGridView1.Columns[0], ListSortDirection.Ascending);
+            dataGridView1.Columns[0].Width = 175;
         }
 
-        private void FillMealList(DataTable dt = null)
+        private void FillMealList()
         {
-            if (dt == null)
+            if (dataTable == null)
             {
-                dataTable.Rows.Clear();
-                dt = dataTable;
+                string[] headers = { "Name", "Cooking Time", "Protein Content", "Carb Content" };
+                dataTable = new DataTable();
+                for (int i = 0; i < headers.Length; i++)
+                {
+                    dataTable.Columns.Add(headers[i]);
+                }
             }
-            foreach (Meal m in Program.db.GetMeals())
+            else
             {
-                if (!meals.Contains(m)) { AddToTable(dt, m); }
+                dataTable.Clear();
+            }
+
+            Meals = Program.db.GetMeals();
+            foreach (Meal meal in Meals)
+            {
+                if (!plan.Contains(meal)) { dataTable.Add(meal); }
             }
         }
 
-        private void AddToTable(DataTable table, Meal m)
+        private void AddMealToLabel(Label lbl, String mealName)
         {
-            DataRow d = table.NewRow();
-            d[0] = m.Name;
-            d[1] = m.CookTime;
-            d[2] = m.GetProtein();
-            d[3] = m.GetCarb();
-            table.Rows.Add(d);
+            lbl.Text = mealName;
+            plan.Add(Meals.Where(meal => meal.Name == mealName).Single());
+            dataTable.Remove(mealName);
         }
 
-        private void GenericDragEnter(object sender, DragEventArgs e)
+        private void RemoveMealFromPlan(String mealName)
         {
-            if (e.Data.GetDataPresent(typeof(string))) { e.Effect = DragDropEffects.Move; }
+            Meal m = Meals.Where(meal => meal.Name == mealName).Single();
+            dataTable.Add(m);
+            plan.Remove(m);
         }
 
-        private void GenericDragDrop(object sender, DragEventArgs e)
+        private void btnAdd_Click(object sender, EventArgs e)
         {
-            if (e.Data.GetDataPresent(typeof(string)))
+            AddNewMeal();
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+            FillMealList();
+            if (textBox1.Text != "")
             {
-                Label lbl = ((Label)sender);
-                string mealName = (string)e.Data.GetData(typeof(string));
-                if (lbl.Text != "") { RemoveMealFromPlan(lbl.Text); }
-                AddMealToLabel(lbl, mealName);
+                string matchString = textBox1.Text.ToLower();
+                for (int i = dataTable.Rows.Count - 1; i >= 0; i--)
+                {
+                    string mealName = ((string)(dataTable.Rows[i].ItemArray[0])).ToLower();
+                    if (!(mealName.Contains(matchString)))
+                    {
+                        dataTable.Rows[i].Delete();
+                    }
+                }
+            }
+        }
+
+        private void AddNewMeal()
+        {
+            BoolWrapper Bool = new BoolWrapper();
+            Meal meal = Meal.NULL;
+            new AddMeal ()
+            {
+                ReturnedBool = Bool,
+                StarterMeal = meal,
+                MealName = textBox1.Text
+            }
+            .ShowDialog();
+            if (Bool)
+            {
                 FillMealList();
+                AddMealToPlan(meal.Name);
+                textBox1.Text = "";
+            };
+        }
+
+        private void AddMealToPlan(string mealName)
+        {
+            IEnumerable<Label> labels = this.Controls.OfType<Label>().Reverse();
+            foreach (Label label in labels)
+            {
+                if (label.Text == "")
+                {
+                    AddMealToLabel(label, mealName);
+                    return;
+                }
             }
         }
 
-        private void AddMealToLabel(Label lbl, String MealName)
+        private void Plan_FormClosing(object sender, FormClosingEventArgs e)
         {
-            lbl.Text = MealName;
-            meals.Add(Program.db.GetMeals().Where(meal => meal.Name == MealName).First<Meal>());
+            if (e.CloseReason != CloseReason.ApplicationExitCall && DialogResult != DialogResult.OK)
+            {
+                e.Cancel = (ExtensionMethods.QuitDialog() == DialogResult.No);
+                if (!e.Cancel) Application.Exit();
+            }
         }
 
-        private void GenericLabelDoubleClick(object sender, EventArgs e)
+        private void btnBack_Click(object sender, EventArgs e)
         {
-            Label ClickedLabel = (Label)sender;
-            if (ClickedLabel.Text == "") return;
-            RemoveMealFromPlan(ClickedLabel.Text);
-            ClickedLabel.Text = "";
-        }
-
-        private void RemoveMealFromPlan(String MealName)
-        {
-            Meal m = Program.db.GetMeals().Where(meal => meal.Name == MealName).First<Meal>();
-            AddToTable(dataTable, m);
-            meals.Remove(m);
+            if (MyParent != null) MyParent.Show();
+            DialogResult = DialogResult.OK;
+            Close();
         }
 
         private void btnAccept_Click(object sender, EventArgs e)
         {
             Dictionary<string, int> shopping = new Dictionary<string, int>();
-            foreach (Meal m in meals)
+            foreach (Meal m in plan)
             {
                 foreach (Ingredient i in m.Ingredients)
                 {
@@ -116,7 +148,7 @@ namespace MealPlannerApp.Forms
                     }
                 }
             }
-            List<string> mealnames = meals.ToList<Meal>().ConvertAll<string>(meal => meal.Name);
+            List<string> mealnames = plan.ToList<Meal>().ConvertAll<string>(meal => meal.Name);
 
             Form sl = new ShoppingList()
             {
@@ -128,47 +160,49 @@ namespace MealPlannerApp.Forms
             Hide();
         }
 
-        private void btnAdd_Click(object sender, EventArgs e)
+        private void textBox1_KeyDown(object sender, KeyEventArgs e)
         {
-            AddNewMeal();
-        }
-
-        private void AddNewMeal()
-        {
-            BooleanPasser bp = new BooleanPasser();
-            AddMeal addDialog = new AddMeal { ReturnedBool = bp, StarterMeal = null };
-            addDialog.MealName = textBox1.Text;
-            addDialog.ShowDialog();
-            if (bp.Value)
+            if (e.KeyCode == Keys.Enter)
             {
-                FillMealList();
-                AddMealToPlan(((Meal)bp.Component).Name);
-                textBox1.Text = "";
-            };
-        }
-
-        private void AddMealToPlan(string mealName)
-        {
-            int selectedRow = -1;
-            for (int i = 0; i < dataTable.Rows.Count; i++)
-            {
-                if ((string)dataTable.Rows[i].ItemArray[0] == mealName)
+                DataTable dt = (DataTable)dataGridView1.DataSource;
+                if (dt.Rows.Count == 0)
                 {
-                    selectedRow = i;
-                    break;
+                    AddNewMeal();
                 }
+                else
+                {
+                    AddMealToPlan((string)dataGridView1.CurrentRow.Cells[0].Value);
+                    textBox1.Text = "";
+                }
+                return;
+            } else if(e.KeyCode == Keys.Up || e.KeyCode == Keys.Down)
+            {
+                e.Handled = true;
+            } else
+            {
+                return;
             }
-            if (selectedRow < 0) return;
-
-            IEnumerable<Label> labels = this.Controls.OfType<Label>().Reverse();
-            foreach (Label label in labels)
+            if (dataGridView1.Rows.Count == 0) return;
+            int index = dataGridView1.CurrentCell.RowIndex;
+            switch (e.KeyCode)
             {
-                if (label.Text == "")
-                {
-                    AddMealToLabel(label, mealName);
-                    dataTable.Rows[selectedRow].Delete();
-                    return;
-                }
+                case Keys.Up:
+                    index = Math.Max(index - 1, 0);
+                    break;
+                case Keys.Down:
+                    index = Math.Min(index + 1, dataGridView1.Rows.Count - 1);
+                    break;
+            }
+            dataGridView1.ClearSelection();
+            dataGridView1.Rows[index].Selected = true;
+            dataGridView1.CurrentCell = dataGridView1.Rows[index].Cells[0];
+        }
+
+        private void dataGridView1_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                AddMealToPlan((string)dataGridView1.CurrentRow.Cells[0].Value);
             }
         }
 
@@ -204,54 +238,27 @@ namespace MealPlannerApp.Forms
             }
         }
 
-        private void btnBack_Click(object sender, EventArgs e)
+        private void GenericLabelDoubleClick(object sender, EventArgs e)
         {
-            if (MyParent != null) MyParent.Show();
-            DialogResult = DialogResult.OK;
-            Close();
+            Label ClickedLabel = (Label)sender;
+            if (ClickedLabel.Text == "") return;
+            RemoveMealFromPlan(ClickedLabel.Text);
+            ClickedLabel.Text = "";
         }
 
-        private void Plan_FormClosing(object sender, FormClosingEventArgs e)
+        private void GenericDragEnter(object sender, DragEventArgs e)
         {
-            if (e.CloseReason != CloseReason.ApplicationExitCall && DialogResult != DialogResult.OK)
-            {
-                var confirmation = MessageBox.Show("Are you sure you would like to close MealPlanner?", "Quit Confirmation", MessageBoxButtons.YesNo);
-                e.Cancel = (confirmation == DialogResult.No);
-                if (!e.Cancel) Application.Exit();
-            }
+            if (e.Data.GetDataPresent(typeof(string))) { e.Effect = DragDropEffects.Move; }
         }
 
-        private void textBox1_TextChanged(object sender, EventArgs e)
+        private void GenericDragDrop(object sender, DragEventArgs e)
         {
-            DataTable dt = NewDataTable();
-            FillMealList(dt);
-            if (textBox1.Text != "")
+            if (e.Data.GetDataPresent(typeof(string)))
             {
-                for (int i = dt.Rows.Count - 1; i >= 0; i--)
-                {
-                    if (!((string)dt.Rows[i].ItemArray[0]).ToLower().Contains(textBox1.Text.ToLower()))
-                    {
-                        dt.Rows[i].Delete();
-                    }
-                }
-            }
-            SetDataGridViewSource(dt);
-        }
-
-        private void textBox1_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-            {
-                DataTable dt = (DataTable)dataGridView1.DataSource;
-                if (dt.Rows.Count == 1)
-                {
-                    AddMealToPlan((string)dt.Rows[0].ItemArray[0]);
-                    textBox1.Text = "";
-                }
-                else if (dt.Rows.Count == 0)
-                {
-                    AddNewMeal();
-                }
+                Label lbl = ((Label)sender);
+                string mealName = (string)e.Data.GetData(typeof(string));
+                if (lbl.Text != "") { RemoveMealFromPlan(lbl.Text); }
+                AddMealToLabel(lbl, mealName);
             }
         }
     }

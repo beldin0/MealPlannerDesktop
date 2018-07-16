@@ -15,18 +15,18 @@ namespace MealPlannerApp.Forms
 
         private Predicate<IMealComponent> AddMealDelegate = delegate (IMealComponent m)
             {
-                BooleanPasser bp = new BooleanPasser();
-                AddMeal addDialog = new AddMeal { ReturnedBool = bp, StarterMeal = (Meal)m };
-                addDialog.ShowDialog();
-                return bp.Value;
+                BoolWrapper Bool = new BoolWrapper();
+                if (m == null) { m = Meal.NULL; }
+                new AddMeal { ReturnedBool = Bool, StarterMeal = (Meal)m }.ShowDialog();
+                return Bool;
             };
 
         private Predicate<IMealComponent> AddIngredientDelegate = delegate (IMealComponent i)
             {
-                BooleanPasser bp = new BooleanPasser();
-                AddIngredient addDialog = new AddIngredient { ReturnedBool = bp, StarterIngredient = (Ingredient)i };
-                addDialog.ShowDialog();
-                return bp.Value;
+                BoolWrapper Bool = new BoolWrapper();
+                if (i == null) { i = Ingredient.NULL; }
+                new AddIngredient { ReturnedBool = Bool, StarterIngredient = (Ingredient)i }.ShowDialog();
+                return Bool;
             };
 
         public string ManagerType
@@ -122,8 +122,7 @@ namespace MealPlannerApp.Forms
         {
             if (e.CloseReason != CloseReason.ApplicationExitCall && DialogResult != DialogResult.OK)
             {
-                var confirmation = MessageBox.Show("Are you sure you would like to close MealPlanner?", "Quit Confirmation", MessageBoxButtons.YesNo);
-                e.Cancel = (confirmation == DialogResult.No);
+                e.Cancel = (ExtensionMethods.QuitDialog() == DialogResult.No);
                 if (!e.Cancel) Application.Exit();
             }
         }

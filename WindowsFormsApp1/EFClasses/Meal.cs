@@ -12,14 +12,16 @@ namespace MealPlannerApp.EFClasses
         public int MealID { get; set; }
         public string Name { get; set; }
         private string _CookTime;
-        public string CookTime {
+        public string CookTime
+        {
             get { return _CookTime; }
             set
             {
                 if (value == null || CookingTime.GetCookTimes().Contains(value))
                 {
                     _CookTime = value;
-                } else
+                }
+                else
                 {
                     throw new ArgumentException();
                 }
@@ -28,6 +30,13 @@ namespace MealPlannerApp.EFClasses
         public Type? MealType { get; set; }
 
         public virtual List<Ingredient> Ingredients { get; set; }
+        public static Meal NULL
+        {
+            get
+            {
+                return new Meal() { Name = null };
+            }
+        }
 
         public override string ToString()
         {

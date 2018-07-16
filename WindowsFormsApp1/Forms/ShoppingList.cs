@@ -107,8 +107,7 @@ namespace MealPlannerApp.Forms
         {
             if (e.CloseReason != CloseReason.ApplicationExitCall && DialogResult != DialogResult.OK)
             {
-                var confirmation = MessageBox.Show("Are you sure you would like to close MealPlanner?", "Quit Confirmation", MessageBoxButtons.YesNo);
-                e.Cancel = (confirmation == DialogResult.No);
+                e.Cancel = (ExtensionMethods.QuitDialog() == DialogResult.No);
                 if (!e.Cancel) Application.Exit();
             }
         }
