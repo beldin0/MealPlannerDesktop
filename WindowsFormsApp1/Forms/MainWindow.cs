@@ -17,9 +17,10 @@ namespace MealPlannerApp.Forms
 
         private void Ingredients_Click(object sender, EventArgs e)
         {
+            MealPlannerContext db = new MealPlannerContext();
             SharedClickFunctions(
                 "Ingredients",
-                Program.db.GetIngredients()
+                db.GetIngredients()
             );
         }
 
@@ -38,9 +39,10 @@ namespace MealPlannerApp.Forms
 
         private void btnMeals_Click(object sender, EventArgs e)
         {
+            MealPlannerContext db = new MealPlannerContext();
             SharedClickFunctions(
                 "Meals",
-                Program.db.GetMeals()
+                db.GetMeals()
             );
         }
 
@@ -59,13 +61,12 @@ namespace MealPlannerApp.Forms
 
         private void SharedClickFunctions(String ManagerType, IEnumerable DataSource)
         {
-            Form mgr = new ManagerWindow
+            new ManagerWindow
             {
                 ManagerType = ManagerType,
                 ListBoxDataSource = DataSource,
                 MyParent = this
-            };
-            mgr.Show();
+            }.Show();
             Hide();
         }
 

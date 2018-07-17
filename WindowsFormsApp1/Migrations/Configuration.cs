@@ -1,18 +1,19 @@
 namespace MealPlannerApp.Migrations
 {
+    using MealPlannerApp.Classes;
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<MealPlannerApp.MealPlannerContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<MealPlannerContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
         }
 
-        protected override void Seed(MealPlannerApp.MealPlannerContext context)
+        protected override void Seed(MealPlannerContext context)
         {
             //  This method will be called after migrating to the latest version.
 

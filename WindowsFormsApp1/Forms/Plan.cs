@@ -11,6 +11,7 @@ namespace MealPlannerApp.Forms
 {
     public partial class Plan : Form
     {
+        MealPlannerContext db = new MealPlannerContext();
         public Form MyParent { get; set; }
         private List<Meal> plan = new List<Meal>();
         private DataTable dataTable;
@@ -41,7 +42,7 @@ namespace MealPlannerApp.Forms
                 dataTable.Clear();
             }
 
-            Meals = Program.db.GetMeals();
+            Meals = db.GetMeals();
             foreach (Meal meal in Meals)
             {
                 if (!plan.Contains(meal)) { dataTable.Add(meal); }

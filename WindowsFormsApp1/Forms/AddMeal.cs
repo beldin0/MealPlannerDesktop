@@ -2,12 +2,7 @@
 using MealPlannerApp.EFClasses;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace MealPlannerApp.Forms
@@ -15,6 +10,7 @@ namespace MealPlannerApp.Forms
     public partial class AddMeal : Form
     {
         internal Wrapper<bool> ReturnedBool;
+        MealPlannerContext db = new MealPlannerContext();
 
         // Field to hold incoming meal in the case of an Edit rather than Add
         internal Meal StarterMeal;
@@ -32,7 +28,7 @@ namespace MealPlannerApp.Forms
         {
             if (Pred == null) Pred = delegate (Ingredient i) { return !lstUsed.Items.OfType<Ingredient>().ToList<Ingredient>().Contains(i); };
             lstAvailable.Items.Clear();
-            foreach (var item in Program.db.GetIngredients())
+            foreach (var item in db.GetIngredients())
             {
                 if (Pred(item)) lstAvailable.Items.Add(item);
             }
@@ -69,7 +65,7 @@ namespace MealPlannerApp.Forms
             }
             if (StarterMeal.Name != null)
             {
-                Program.db.Delete(StarterMeal);
+                db.Delete(StarterMeal);
             }
             StarterMeal.Name = txtName.Text;
             StarterMeal.CookTime = cboCookTime.Text;
@@ -79,7 +75,7 @@ namespace MealPlannerApp.Forms
                 StarterMeal.Ingredients.Add((Ingredient)item);
             }
 
-            Program.db.Add(StarterMeal);
+            db.Add(StarterMeal);
             ReturnedBool.Value = true;
             Close();
         }

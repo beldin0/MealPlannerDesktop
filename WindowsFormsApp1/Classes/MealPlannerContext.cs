@@ -5,9 +5,9 @@ using System.Data.Entity;
 
 namespace MealPlannerApp.Classes
 {
-    public class MealPlannerContext2 : DbContext
+    public class MealPlannerContext : DbContext
     {
-        public MealPlannerContext2() : base("Data Source=" + Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\MealPlannerDb\Database.sdf")
+        public MealPlannerContext() : base("Data Source=" + Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\MealPlannerDb\Database.sdf")
         {
             Configuration.LazyLoadingEnabled = false;
             Configuration.ProxyCreationEnabled = true;

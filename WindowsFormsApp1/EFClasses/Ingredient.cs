@@ -28,7 +28,6 @@ namespace MealPlannerApp.EFClasses
 
         public override string ToString()
         {
-            if (Meals == null) Program.db.Entry(this).Collection("Meals").Load();
             string value = Name;
             value += DefaultQuantityType == null ? "" : " (" + DefaultQuantityType + ")";
             value += (IsCarb ? " [C]" : IsProtein ? " [P]" : "");

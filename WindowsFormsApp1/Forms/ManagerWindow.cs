@@ -9,6 +9,8 @@ namespace MealPlannerApp.Forms
 {
     public partial class ManagerWindow : Form
     {
+        MealPlannerContext db = new MealPlannerContext();
+
         public Form MyParent { get; set; }
 
         internal Predicate<IMealComponent> AddClickMethod = delegate (IMealComponent mc) { var result = Dialogs.Unimplemented; return false; };
@@ -87,14 +89,14 @@ namespace MealPlannerApp.Forms
             {
                 switch (item.Type())
                 {
-                    case 'M': Program.db.Delete((Meal)item); break;
+                    case 'M': db.Delete((Meal)item); break;
                     case 'I':
                         {
                             if (((Ingredient)item).Meals.Count > 0)
                             {
                                 if (Dialogs.ConfirmDelete == DialogResult.No) { break; };
                             }
-                            Program.db.Delete((Ingredient)item);
+                            db.Delete((Ingredient)item);
                             break;
                         }
                 }

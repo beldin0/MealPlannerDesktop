@@ -159,6 +159,7 @@
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "AddIngredient";
             this.Text = "Add Ingredient";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.AddIngredient_FormClosed);
             this.Shown += new System.EventHandler(this.AddIngredient_Shown);
             this.ResumeLayout(false);
             this.PerformLayout();

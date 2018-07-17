@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MealPlannerApp.EFClasses
 {
@@ -40,7 +37,6 @@ namespace MealPlannerApp.EFClasses
 
         public override string ToString()
         {
-            if (Ingredients == null) Program.db.Entry(this).Collection("Ingredients").Load();
             return Name + " [" + (Ingredients == null ? 0 : Ingredients.Count) + "]";
         }
 
@@ -57,7 +53,6 @@ namespace MealPlannerApp.EFClasses
 
         internal string GetCarb()
         {
-            if (Ingredients == null) Program.db.Entry(this).Collection("Ingredients").Load();
             foreach (Ingredient i in Ingredients)
             {
                 if (i.IsCarb) return i.Name;
@@ -67,7 +62,6 @@ namespace MealPlannerApp.EFClasses
 
         internal string GetProtein()
         {
-            if (Ingredients == null) Program.db.Entry(this).Collection("Ingredients").Load();
             foreach (Ingredient i in Ingredients)
             {
                 if (i.IsProtein) return i.Name;

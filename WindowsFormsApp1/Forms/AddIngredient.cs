@@ -15,6 +15,7 @@ namespace MealPlannerApp.Forms
     public partial class AddIngredient : Form
     {
         internal Wrapper<bool> ReturnedBool;
+        MealPlannerContext db;
 
         // Field to hold incoming ingredient in the case of an Edit rather than Add
         internal Ingredient StarterIngredient;
@@ -25,6 +26,7 @@ namespace MealPlannerApp.Forms
         public AddIngredient()
         {
             InitializeComponent();
+            db = new MealPlannerContext();
         }
 
 
@@ -54,7 +56,7 @@ namespace MealPlannerApp.Forms
                 StarterIngredient.DefaultQuantityType = txtUnits.Text == "" ? null : txtUnits.Text;
                 StarterIngredient.IsCarb = chkCarb.Checked;
                 StarterIngredient.IsProtein = chkProtein.Checked;
-                Program.db.Add(StarterIngredient);
+                db.Add(StarterIngredient);
             }
             else
             {
@@ -62,7 +64,7 @@ namespace MealPlannerApp.Forms
                 StarterIngredient.DefaultQuantityType = txtUnits.Text == "" ? null : txtUnits.Text;
                 StarterIngredient.IsCarb = chkCarb.Checked;
                 StarterIngredient.IsProtein = chkProtein.Checked;
-                Program.db.SaveChanges();
+                db.SaveChanges();
             }
             ReturnedBool.Value = true;
             Close();
@@ -78,6 +80,11 @@ namespace MealPlannerApp.Forms
                 chkCarb.Checked = StarterIngredient.IsCarb;
                 chkProtein.Checked = StarterIngredient.IsProtein;
             }
+        }
+
+        private void AddIngredient_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            db.Dispose();
         }
     }
 }
