@@ -35,25 +35,25 @@ namespace MealPlannerApp.Classes
             table.Rows.Add(d);
         }
 
-        public static List<string> ConcatList(this List<string> list, int maxlength = 90)
+        public static void ConcatList(this List<string> list, int maxlength = 90)
         {
-            List<string> newlist = new List<string>();
+            List<string> copyOfList = new List<string>(list);
+            list.Clear();
             string line = "";
-            foreach (string ingredient in list)
+            foreach (string ingredient in copyOfList)
             {
-                if (line.Length + ingredient.Length < 90)
+                if (line.Length + ingredient.Length < maxlength)
                 {
-                    line += ingredient + ",";
+
+                    line += (line.Length > 0 ? ", " : "") + ingredient;
                 }
                 else
                 {
-                    newlist.Add(line);
+                    list.Add(line);
                     line = "";
                 }
             }
-            if (line != "") newlist.Add(line);
-            list = newlist;
-            return newlist;
+            if (line != "") list.Add(line);
         }
     }
 }
