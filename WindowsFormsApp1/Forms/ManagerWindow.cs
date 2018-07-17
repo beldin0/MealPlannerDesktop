@@ -11,23 +11,23 @@ namespace MealPlannerApp.Forms
     {
         public Form MyParent { get; set; }
 
-        internal Predicate<IMealComponent> AddClickMethod = delegate (IMealComponent mc) { MessageBox.Show("Unimplemented!"); return false; };   
+        internal Predicate<IMealComponent> AddClickMethod = delegate (IMealComponent mc) { MessageBox.Show("Unimplemented!"); return false; };
 
         private Predicate<IMealComponent> AddMealDelegate = delegate (IMealComponent m)
             {
-                BoolWrapper Bool = new BoolWrapper();
+                Wrapper<bool> Bool = new Wrapper<bool>(false);
                 if (m == null) { m = Meal.NULL; }
                 new AddMeal { ReturnedBool = Bool, StarterMeal = (Meal)m }.ShowDialog();
                 return Bool;
             };
 
         private Predicate<IMealComponent> AddIngredientDelegate = delegate (IMealComponent i)
-            {
-                BoolWrapper Bool = new BoolWrapper();
-                if (i == null) { i = Ingredient.NULL; }
-                new AddIngredient { ReturnedBool = Bool, StarterIngredient = (Ingredient)i }.ShowDialog();
-                return Bool;
-            };
+        {
+            Wrapper<bool> Bool = new Wrapper<bool>(false);
+            if (i == null) { i = Ingredient.NULL; }
+            new AddIngredient { ReturnedBool = Bool, StarterIngredient = (Ingredient)i }.ShowDialog();
+            return Bool;
+        };
 
         public string ManagerType
         {
@@ -88,7 +88,8 @@ namespace MealPlannerApp.Forms
                 switch (item.Type())
                 {
                     case 'M': Program.db.Delete((Meal)item); break;
-                    case 'I': {
+                    case 'I':
+                        {
                             if (((Ingredient)item).Meals.Count > 0)
                             {
                                 if (MessageBox.Show("Are you sure you want to delete an\ningredient that is part of a meal?", "Confirm", MessageBoxButtons.YesNo) == DialogResult.No) { break; };
@@ -122,7 +123,7 @@ namespace MealPlannerApp.Forms
         {
             if (e.CloseReason != CloseReason.ApplicationExitCall && DialogResult != DialogResult.OK)
             {
-                e.Cancel = (ExtensionMethods.QuitDialog() == DialogResult.No);
+                e.Cancel = (Dialogs.QuitDialog == DialogResult.No);
                 if (!e.Cancel) Application.Exit();
             }
         }

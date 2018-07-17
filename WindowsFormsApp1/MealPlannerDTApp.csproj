@@ -91,10 +91,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Forms\Dialogs.cs" />
+    <Compile Include="Classes\Interfaces\IShoppingManager.cs" />
+    <Compile Include="Classes\TescoShoppingManager.cs" />
     <Compile Include="Classes\Wrapper.cs" />
     <Compile Include="Classes\ExtensionMethods.cs" />
     <Compile Include="Classes\FileIOManager.cs" />
-    <Compile Include="Classes\LoginDetails.cs" />
     <Compile Include="Classes\LoginDetailsManager.cs" />
     <Compile Include="Forms\AddIngredient.cs">
       <SubType>Form</SubType>
@@ -108,7 +110,6 @@
     <Compile Include="Forms\AddMeal.Designer.cs">
       <DependentUpon>AddMeal.cs</DependentUpon>
     </Compile>
-    <Compile Include="Classes\BoolWrapper.cs" />
     <Compile Include="EFClasses\Ingredient.cs" />
     <Compile Include="Forms\EveryWeekItems.cs">
       <SubType>Form</SubType>

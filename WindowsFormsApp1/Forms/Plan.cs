@@ -86,7 +86,7 @@ namespace MealPlannerApp.Forms
 
         private void AddNewMeal()
         {
-            BoolWrapper Bool = new BoolWrapper();
+            Wrapper<bool> Bool = new Wrapper<bool>(false);
             Meal meal = Meal.NULL;
             new AddMeal ()
             {
@@ -120,7 +120,7 @@ namespace MealPlannerApp.Forms
         {
             if (e.CloseReason != CloseReason.ApplicationExitCall && DialogResult != DialogResult.OK)
             {
-                e.Cancel = (ExtensionMethods.QuitDialog() == DialogResult.No);
+                e.Cancel = (Dialogs.QuitDialog == DialogResult.No);
                 if (!e.Cancel) Application.Exit();
             }
         }
@@ -148,15 +148,14 @@ namespace MealPlannerApp.Forms
                     }
                 }
             }
-            List<string> mealnames = plan.ToList<Meal>().ConvertAll<string>(meal => meal.Name);
+            List<string> mealnames = plan.ToList().ConvertAll(meal => meal.Name);
 
-            Form sl = new ShoppingList()
+            new ShoppingList()
             {
                 meals = mealnames,
                 ingredients = shopping,
                 MyParent = this
-            };
-            sl.Show();
+            }.Show();
             Hide();
         }
 

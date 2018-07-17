@@ -27,7 +27,7 @@ namespace MealPlannerApp.Forms
         {
             return delegate ()
             {
-                BoolWrapper Bool = new BoolWrapper();
+                Wrapper<bool> Bool = new Wrapper<bool>(false);
                 using (AddIngredient addDialog = new AddIngredient { ReturnedBool = Bool })
                 {
                     addDialog.Show();
@@ -48,7 +48,7 @@ namespace MealPlannerApp.Forms
         {
             return delegate ()
             {
-                BoolWrapper Bool = new BoolWrapper();
+                Wrapper<bool> Bool = new Wrapper<bool>(false);
                 using (AddMeal addDialog = new AddMeal { ReturnedBool = Bool, StarterMeal = m })
                 {
                     addDialog.Show();
@@ -80,7 +80,7 @@ namespace MealPlannerApp.Forms
         {
             if (e.CloseReason != CloseReason.ApplicationExitCall)
             {
-                e.Cancel = (ExtensionMethods.QuitDialog() == DialogResult.No);
+                e.Cancel = (Dialogs.QuitDialog == DialogResult.No);
                 if (!e.Cancel) Application.Exit();
             }
         }

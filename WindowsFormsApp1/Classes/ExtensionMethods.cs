@@ -1,10 +1,6 @@
 ﻿using MealPlannerApp.EFClasses;
-using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace MealPlannerApp.Classes
@@ -39,9 +35,25 @@ namespace MealPlannerApp.Classes
             table.Rows.Add(d);
         }
 
-        public static DialogResult QuitDialog()
+        public static List<string> ConcatList(this List<string> list, int maxlength = 90)
         {
-            return MessageBox.Show("Are you sure you would like to close MealPlanner?", "Quit Confirmation", MessageBoxButtons.YesNo);
+            List<string> newlist = new List<string>();
+            string line = "";
+            foreach (string ingredient in list)
+            {
+                if (line.Length + ingredient.Length < 90)
+                {
+                    line += ingredient + ",";
+                }
+                else
+                {
+                    newlist.Add(line);
+                    line = "";
+                }
+            }
+            if (line != "") newlist.Add(line);
+            list = newlist;
+            return newlist;
         }
     }
 }

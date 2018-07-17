@@ -4,32 +4,33 @@ using System.Windows.Forms;
 
 namespace MealPlannerApp.Classes
 {
-    internal static class LoginDetailsManager
+    internal class LoginDetailsManager : IDisposable
     {
         private static readonly string file = "logindetails.txt";
+        internal string Username { get; set; }
+        internal string Password { get; set; }
 
-        public static LoginDetails GetLoginDetails()
+        public DialogResult DialogResult { get; set; }
+
+        public LoginDetailsManager()
         {
-            LoginDetails details = null;
             FileIOManager fm = new FileIOManager(file);
             string[] text = fm.Read();
             if (isValidStringArray(text))
             {
-                string username = text[0];
-                string password = text[1];
-                details = new LoginDetails(username, password);
+                Username = text[0];
+                Password = text[1];
+                DialogResult = DialogResult.OK;
+                return;
             }
-            if (details == null)
+            Wrapper<string> username = new Wrapper<string>(null);
+            Wrapper<string> password = new Wrapper<string>(null);
+            new GetLoginDetails() { Username = username, Password = password }.ShowDialog();
+            if (username.Value != null)
             {
-                details = new LoginDetails();
-                Form getLogin = new GetLoginDetails() { Details = details };
-                getLogin.ShowDialog();
-                if (details != null)
-                {
-                    fm.Write(details.AsStringArray());
-                }
+                fm.Write(new string[] { username, password });
+                DialogResult = DialogResult.OK;
             }
-            return details;
         }
 
         private static bool isValidStringArray(string[] text)
@@ -38,5 +39,7 @@ namespace MealPlannerApp.Classes
             if (text[0] == "" || text[1] == "") return false;
             return true;
         }
+
+        public void Dispose() { }
     }
 }

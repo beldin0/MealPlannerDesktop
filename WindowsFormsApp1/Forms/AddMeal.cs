@@ -14,7 +14,7 @@ namespace MealPlannerApp.Forms
 {
     public partial class AddMeal : Form
     {
-        internal BoolWrapper ReturnedBool;
+        internal Wrapper<bool> ReturnedBool;
 
         // Field to hold incoming meal in the case of an Edit rather than Add
         internal Meal StarterMeal;
@@ -91,7 +91,7 @@ namespace MealPlannerApp.Forms
 
         private void btnAddIngredient_Click(object sender, EventArgs e)
         {
-            BoolWrapper Bool = new BoolWrapper();
+            Wrapper<bool> Bool = new Wrapper<bool>(false);
             Ingredient ingredient = Ingredient.NULL;
             new AddIngredient { ReturnedBool = Bool, StarterIngredient = ingredient, IngredientName = textBox1.Text }.ShowDialog();
             if (Bool)

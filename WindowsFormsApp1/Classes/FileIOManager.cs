@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MealPlannerApp.Classes
 {
-    class FileIOManager
+    class FileIOManager : IDisposable
     {
         private static readonly string folder = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\MealPlannerDb\";
         string _path;
@@ -16,6 +16,8 @@ namespace MealPlannerApp.Classes
         {
             _path = folder + filename;
         }
+
+        public void Dispose() { }
 
         internal string[] Read()
         {
