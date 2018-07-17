@@ -11,7 +11,7 @@ namespace MealPlannerApp.Forms
     {
         public Form MyParent { get; set; }
 
-        internal Predicate<IMealComponent> AddClickMethod = delegate (IMealComponent mc) { MessageBox.Show("Unimplemented!"); return false; };
+        internal Predicate<IMealComponent> AddClickMethod = delegate (IMealComponent mc) { var result = Dialogs.Unimplemented; return false; };
 
         private Predicate<IMealComponent> AddMealDelegate = delegate (IMealComponent m)
             {
@@ -92,7 +92,7 @@ namespace MealPlannerApp.Forms
                         {
                             if (((Ingredient)item).Meals.Count > 0)
                             {
-                                if (MessageBox.Show("Are you sure you want to delete an\ningredient that is part of a meal?", "Confirm", MessageBoxButtons.YesNo) == DialogResult.No) { break; };
+                                if (Dialogs.ConfirmDelete == DialogResult.No) { break; };
                             }
                             Program.db.Delete((Ingredient)item);
                             break;
