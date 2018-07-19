@@ -47,6 +47,7 @@
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.btnBack = new System.Windows.Forms.Button();
+            this.btnSuggest = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -289,7 +290,7 @@
             // btnBack
             // 
             this.btnBack.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnBack.Location = new System.Drawing.Point(444, 255);
+            this.btnBack.Location = new System.Drawing.Point(407, 256);
             this.btnBack.Margin = new System.Windows.Forms.Padding(2);
             this.btnBack.Name = "btnBack";
             this.btnBack.Size = new System.Drawing.Size(95, 44);
@@ -298,11 +299,24 @@
             this.btnBack.UseVisualStyleBackColor = true;
             this.btnBack.Click += new System.EventHandler(this.btnBack_Click);
             // 
+            // btnSuggest
+            // 
+            this.btnSuggest.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSuggest.Location = new System.Drawing.Point(514, 256);
+            this.btnSuggest.Margin = new System.Windows.Forms.Padding(2);
+            this.btnSuggest.Name = "btnSuggest";
+            this.btnSuggest.Size = new System.Drawing.Size(95, 44);
+            this.btnSuggest.TabIndex = 23;
+            this.btnSuggest.Text = "Suggest";
+            this.btnSuggest.UseVisualStyleBackColor = true;
+            this.btnSuggest.Click += new System.EventHandler(this.btnSuggest_Click);
+            // 
             // Plan
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(827, 314);
+            this.ClientSize = new System.Drawing.Size(827, 311);
+            this.Controls.Add(this.btnSuggest);
             this.Controls.Add(this.btnBack);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.dataGridView1);
@@ -352,5 +366,6 @@
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Button btnBack;
+        private System.Windows.Forms.Button btnSuggest;
     }
 }

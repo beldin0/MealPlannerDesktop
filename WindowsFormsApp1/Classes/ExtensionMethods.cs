@@ -55,5 +55,18 @@ namespace MealPlannerApp.Classes
             }
             if (line != "") list.Add(line);
         }
+
+        public static bool SharesIngredientsWith(this Meal meal1, Meal meal2)
+        {
+            foreach (Ingredient i in meal1.Ingredients)
+            {
+                if (meal2.Ingredients.Contains(i)) return true;
+            }
+            foreach (Ingredient i in meal2.Ingredients)
+            {
+                if (meal1.Ingredients.Contains(i)) return true;
+            }
+            return false;
+        }
     }
 }

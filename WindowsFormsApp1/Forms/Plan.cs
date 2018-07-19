@@ -16,6 +16,7 @@ namespace MealPlannerApp.Forms
         private List<Meal> plan = new List<Meal>();
         private DataTable dataTable;
         private IEnumerable<Meal> Meals;
+        private List<Meal> AvailableMeals => Meals.Except(plan).ToList();
 
         public Plan()
         {
@@ -259,6 +260,42 @@ namespace MealPlannerApp.Forms
                 string mealName = (string)e.Data.GetData(typeof(string));
                 if (lbl.Text != "") { RemoveMealFromPlan(lbl.Text); }
                 AddMealToLabel(lbl, mealName);
+            }
+        }
+
+        private void btnSuggest_Click(object sender, EventArgs e)
+        {
+            MakeSuggestions(7 - plan.Count);
+        }
+
+        private void MakeSuggestions(int number)
+        {
+            Wrapper<Meal> MealWrapper = new Wrapper<Meal>(null);
+            for (int i = 0; i < number; i++)
+            {
+                MealSuggester ms = new MealSuggester(AvailableMeals);
+                MealWrapper.Value = null;
+                Form sv = new SuggestionViewer()
+                {
+                    MealWrapper = MealWrapper,
+                    GetNewSource = ms.NextSuggestion
+                };
+                sv.ShowDialog();
+                switch (sv.DialogResult)
+                {
+                    case DialogResult.OK:
+                        AddMealToPlan(MealWrapper.Value.Name);
+                        //ms.Remove(MealWrapper.Value);
+                        break;
+
+                    case DialogResult.Cancel:
+                        return;
+
+                    default:
+                        i--;
+                        break;
+                }
+                sv.Close();
             }
         }
     }
