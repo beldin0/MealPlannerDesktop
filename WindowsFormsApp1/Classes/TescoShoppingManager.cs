@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace MealPlannerApp.Classes
 {
-    class TescoShoppingManager : IShoppingManager
+    class TescoShoppingManager : IShoppingManager, IDisposable
     {
         private string _username;
         private string _password;
@@ -20,7 +20,7 @@ namespace MealPlannerApp.Classes
 
         public void DoShopping(List<string> shopping)
         {
-            shopping.ConcatList(90);
+            //shopping.ConcatList(90);
             if (driver == null)
             {
                 RegisterDriver();
@@ -48,7 +48,7 @@ namespace MealPlannerApp.Classes
             var chromeDriverService = ChromeDriverService.CreateDefaultService();
             chromeDriverService.HideCommandPromptWindow = true;
             driver = new ChromeDriver(chromeDriverService, new ChromeOptions());
-            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(8);
         }
 
         public void Deregister()
@@ -56,6 +56,15 @@ namespace MealPlannerApp.Classes
             if (driver != null)
             {
                 driver.Quit();
+                driver = null;
+            }
+        }
+
+        public void Dispose()
+        {
+            if (driver != null)
+            {
+                driver.Dispose();
                 driver = null;
             }
         }

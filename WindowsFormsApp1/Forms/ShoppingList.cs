@@ -27,6 +27,10 @@ namespace MealPlannerApp.Forms
             {
                 list.AddRange(fm.Read());
             }
+            using (FileIOManager fm = new FileIOManager("last plan.txt"))
+            {
+                fm.Write(meals);
+            }
             using (LoginDetailsManager login = new LoginDetailsManager())
             {
                 if (login.DialogResult != DialogResult.OK) return;

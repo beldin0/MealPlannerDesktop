@@ -8,20 +8,12 @@ namespace MealPlannerApp.Forms
 {
     public partial class MainWindow : Form
     {
-        ManagerWindow mgr = new ManagerWindow();
+        private IMealPlannerContext MasterContext;
+        private static IMealPlannerContext GetMasterContext() => new LocalDbContext();
 
         public MainWindow()
         {
             InitializeComponent();
-        }
-
-        private void Ingredients_Click(object sender, EventArgs e)
-        {
-            MealPlannerContext db = new MealPlannerContext();
-            SharedClickFunctions(
-                "Ingredients",
-                db.GetIngredients()
-            );
         }
 
         private static Func<bool> AddIngredientDelegate()
@@ -29,21 +21,12 @@ namespace MealPlannerApp.Forms
             return delegate ()
             {
                 Wrapper<bool> Bool = new Wrapper<bool>(false);
-                using (AddIngredient addDialog = new AddIngredient { ReturnedBool = Bool })
+                using (AddIngredient addDialog = new AddIngredient (GetMasterContext()) { ReturnedBool = Bool })
                 {
                     addDialog.Show();
                 }
                 return Bool;
             };
-        }
-
-        private void btnMeals_Click(object sender, EventArgs e)
-        {
-            MealPlannerContext db = new MealPlannerContext();
-            SharedClickFunctions(
-                "Meals",
-                db.GetMeals()
-            );
         }
 
         private static Func<bool> AddMealDelegate(Meal m)
@@ -51,7 +34,7 @@ namespace MealPlannerApp.Forms
             return delegate ()
             {
                 Wrapper<bool> Bool = new Wrapper<bool>(false);
-                using (AddMeal addDialog = new AddMeal { ReturnedBool = Bool, StarterMeal = m, db = new MealPlannerContext() })
+                using (AddMeal addDialog = new AddMeal (GetMasterContext()) { ReturnedBool = Bool, StarterMeal = m })
                 {
                     addDialog.Show();
                 }
@@ -59,38 +42,64 @@ namespace MealPlannerApp.Forms
             };
         }
 
-        private void SharedClickFunctions(String ManagerType, IEnumerable DataSource)
+        private void MealsButton_Click(object sender, EventArgs e)
         {
-            new ManagerWindow
-            {
-                ManagerType = ManagerType,
-                ListBoxDataSource = DataSource,
-                MyParent = this
-            }.Show();
+            if (MasterContext == null) MasterContext = GetMasterContext();
+            ManagerWindow mw = ManagerWindow.GetMealManager(MasterContext);
+            mw.MyParent = this;
+            mw.Show();
             Hide();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void Ingredients_Click(object sender, EventArgs e)
         {
-            Form p = new Plan() { MyParent = this };
+            if (MasterContext == null) MasterContext = GetMasterContext();
+            ManagerWindow mw = ManagerWindow.GetIngredientManager(MasterContext);
+            mw.MyParent = this;
+            mw.Show();
+            Hide();
+        }
+
+        private void PlanButton_Click(object sender, EventArgs e)
+        {
+            if (MasterContext == null) MasterContext = GetMasterContext();
+            Form p = new Plan(MasterContext) { MyParent = this };
             p.Show();
             Hide();
         }
 
         private void MainWindow_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (e.CloseReason != CloseReason.ApplicationExitCall)
+            if (MasterContext != null)
             {
-                e.Cancel = (Dialogs.QuitDialog == DialogResult.No);
-                if (!e.Cancel) Application.Exit();
+                MasterContext.Dispose();
+                MasterContext = null;
             }
+            Application.Exit();
         }
 
-        private void btnEveryWeek_Click(object sender, EventArgs e)
+        private void EveryWeekButton_Click(object sender, EventArgs e)
         {
             Form p = new EveryWeekItems() { MyParent = this };
             p.Show();
             Hide();
+        }
+
+        private void MainWindow_VisibleChanged(object sender, EventArgs e)
+        {
+            if (Visible == true)
+            {
+                if (MasterContext != null)
+                {
+                    MasterContext.Dispose();
+                    MasterContext = null;
+                }
+            }
+        }
+
+        private void MainWindow_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

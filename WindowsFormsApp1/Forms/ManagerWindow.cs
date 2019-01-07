@@ -9,7 +9,7 @@ namespace MealPlannerApp.Forms
 {
     public partial class ManagerWindow : Form
     {
-        MealPlannerContext db = new MealPlannerContext();
+        internal IMealPlannerContext db;
 
         public Form MyParent { get; set; }
 
@@ -17,40 +17,31 @@ namespace MealPlannerApp.Forms
 
         private Predicate<IMealComponent> AddMealDelegate => delegate (IMealComponent m)
             {
+                //if (db == null) { db = new MealPlannerContext(); }
                 Wrapper<bool> Bool = new Wrapper<bool>(false);
                 if (m == null) { m = Meal.NULL; }
-                using (AddMeal addDialog = new AddMeal { ReturnedBool = Bool, StarterMeal = (Meal)m })
+                using (AddMeal addDialog = new AddMeal(db) { ReturnedBool = Bool, StarterMeal = (Meal)m })
                 {
-                    addDialog.db = db;
-                    addDialog.Show();
+                    addDialog.ShowDialog();
                 }
                 return Bool;
             };
 
         private Predicate<IMealComponent> AddIngredientDelegate => delegate (IMealComponent i)
         {
+            //if (db == null) { db = new MealPlannerContext(); }
             Wrapper<bool> Bool = new Wrapper<bool>(false);
             if (i == null) { i = Ingredient.NULL; }
-            new AddIngredient { ReturnedBool = Bool, StarterIngredient = (Ingredient)i, db = db }.ShowDialog();
+            using (AddIngredient addDialog = new AddIngredient(db) { ReturnedBool = Bool, StarterIngredient = (Ingredient)i })
+            {
+                addDialog.ShowDialog();
+            }
             return Bool;
         };
 
-        public string ManagerType
-        {
-            get => _managerType;
-            set
-            {
-                _managerType = value;
-                Text = _managerType + " Manager";
-                AddClickMethod = _managerType == "Meals" ? AddMealDelegate : AddIngredientDelegate;
-            }
-        }
-
-        private string _managerType;
-
         public IEnumerable ListBoxDataSource { get; set; }
 
-        public ManagerWindow()
+        private ManagerWindow()
         {
             InitializeComponent();
         }
@@ -68,7 +59,7 @@ namespace MealPlannerApp.Forms
             listBox1.DataSource = list;
         }
 
-        private void btnAdd_Click(object sender, EventArgs e)
+        private void AddButton_Click(object sender, EventArgs e)
         {
             if (AddClickMethod(null) == true)
             {
@@ -76,7 +67,7 @@ namespace MealPlannerApp.Forms
             }
         }
 
-        private void btnEdit_Click(object sender, EventArgs e)
+        private void EditButton_Click(object sender, EventArgs e)
         {
             IMealComponent item = (IMealComponent)listBox1.SelectedItem;
             if (item == null) return;
@@ -86,30 +77,19 @@ namespace MealPlannerApp.Forms
             }
         }
 
-        private void btnDelete_Click(object sender, EventArgs e)
+        private void DeleteButton_Click(object sender, EventArgs e)
         {
             IMealComponent item = (IMealComponent)listBox1.SelectedItem;
             if (item != null)
             {
-                switch (item.Type())
-                {
-                    case 'M': db.Delete((Meal)item); break;
-                    case 'I':
-                        {
-                            if (((Ingredient)item).Meals.Count > 0)
-                            {
-                                if (Dialogs.ConfirmDelete == DialogResult.No) { break; };
-                            }
-                            db.Delete((Ingredient)item);
-                            break;
-                        }
-                }
+                item.DeleteFrom(db);
+                item = null;
+                UpdateListBoxes();
             }
-            UpdateListBoxes();
         }
 
         // When an item is selected, fill the linked items in the other box
-        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
+        private void ListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             IMealComponent item = (IMealComponent)listBox1.SelectedItem;
             if (item == null) return;
@@ -134,11 +114,34 @@ namespace MealPlannerApp.Forms
             }
         }
 
-        private void btnBack_Click(object sender, EventArgs e)
+        private void BackButton_Click(object sender, EventArgs e)
         {
             if (MyParent != null) MyParent.Show();
             DialogResult = DialogResult.OK;
             Close();
+        }
+
+        public static ManagerWindow GetMealManager(IMealPlannerContext db)
+        {
+            ManagerWindow mw = new ManagerWindow() {
+                Text = "Meal Manager",
+                db = db,
+                ListBoxDataSource = db.GetMeals()
+            };
+            mw.AddClickMethod = mw.AddMealDelegate;
+            return mw;
+        }
+
+        public static ManagerWindow GetIngredientManager(IMealPlannerContext db)
+        {
+            ManagerWindow mw = new ManagerWindow()
+            {
+                Text = "Ingredient Manager",
+                db = db,
+                ListBoxDataSource = db.GetIngredients()
+            };
+                        mw.AddClickMethod = mw.AddIngredientDelegate;
+            return mw;
         }
     }
 }

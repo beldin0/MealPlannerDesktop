@@ -15,6 +15,7 @@
         {
             if (disposing && (components != null))
             {
+                db.Dispose();
                 components.Dispose();
             }
             base.Dispose(disposing);
@@ -58,9 +59,9 @@
             this.lblMonday.Location = new System.Drawing.Point(544, 14);
             this.lblMonday.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblMonday.Name = "lblMonday";
-            this.lblMonday.Size = new System.Drawing.Size(58, 17);
+            this.lblMonday.Size = new System.Drawing.Size(65, 17);
             this.lblMonday.TabIndex = 2;
-            this.lblMonday.Text = "Monday";
+            this.lblMonday.Text = "Saturday";
             // 
             // lblTuesday
             // 
@@ -69,9 +70,9 @@
             this.lblTuesday.Location = new System.Drawing.Point(544, 46);
             this.lblTuesday.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblTuesday.Name = "lblTuesday";
-            this.lblTuesday.Size = new System.Drawing.Size(63, 17);
+            this.lblTuesday.Size = new System.Drawing.Size(56, 17);
             this.lblTuesday.TabIndex = 4;
-            this.lblTuesday.Text = "Tuesday";
+            this.lblTuesday.Text = "Sunday";
             // 
             // lblWednesday
             // 
@@ -80,9 +81,9 @@
             this.lblWednesday.Location = new System.Drawing.Point(544, 79);
             this.lblWednesday.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblWednesday.Name = "lblWednesday";
-            this.lblWednesday.Size = new System.Drawing.Size(83, 17);
+            this.lblWednesday.Size = new System.Drawing.Size(58, 17);
             this.lblWednesday.TabIndex = 6;
-            this.lblWednesday.Text = "Wednesday";
+            this.lblWednesday.Text = "Monday";
             // 
             // lblThursday
             // 
@@ -91,9 +92,9 @@
             this.lblThursday.Location = new System.Drawing.Point(544, 111);
             this.lblThursday.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblThursday.Name = "lblThursday";
-            this.lblThursday.Size = new System.Drawing.Size(68, 17);
+            this.lblThursday.Size = new System.Drawing.Size(63, 17);
             this.lblThursday.TabIndex = 8;
-            this.lblThursday.Text = "Thursday";
+            this.lblThursday.Text = "Tuesday";
             // 
             // lblFriday
             // 
@@ -102,9 +103,9 @@
             this.lblFriday.Location = new System.Drawing.Point(544, 144);
             this.lblFriday.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblFriday.Name = "lblFriday";
-            this.lblFriday.Size = new System.Drawing.Size(47, 17);
+            this.lblFriday.Size = new System.Drawing.Size(83, 17);
             this.lblFriday.TabIndex = 10;
-            this.lblFriday.Text = "Friday";
+            this.lblFriday.Text = "Wednesday";
             // 
             // lblSaturday
             // 
@@ -113,9 +114,9 @@
             this.lblSaturday.Location = new System.Drawing.Point(544, 176);
             this.lblSaturday.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblSaturday.Name = "lblSaturday";
-            this.lblSaturday.Size = new System.Drawing.Size(65, 17);
+            this.lblSaturday.Size = new System.Drawing.Size(68, 17);
             this.lblSaturday.TabIndex = 12;
-            this.lblSaturday.Text = "Saturday";
+            this.lblSaturday.Text = "Thursday";
             // 
             // lblSunday
             // 
@@ -124,9 +125,9 @@
             this.lblSunday.Location = new System.Drawing.Point(544, 209);
             this.lblSunday.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblSunday.Name = "lblSunday";
-            this.lblSunday.Size = new System.Drawing.Size(56, 17);
+            this.lblSunday.Size = new System.Drawing.Size(47, 17);
             this.lblSunday.TabIndex = 14;
-            this.lblSunday.Text = "Sunday";
+            this.lblSunday.Text = "Friday";
             // 
             // txtMonday
             // 

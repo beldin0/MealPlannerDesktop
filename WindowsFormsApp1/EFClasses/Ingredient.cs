@@ -1,8 +1,11 @@
-﻿using System;
+﻿using MealPlannerApp.Classes;
+using MealPlannerApp.Forms;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace MealPlannerApp.EFClasses
 {
@@ -24,13 +27,20 @@ namespace MealPlannerApp.EFClasses
             }
         }
 
-        public char Type() { return 'I'; }
+        //public char Type() { return 'I'; }
+
+        public void DeleteFrom(IMealPlannerContext db)
+        {
+            if (Meals.Count > 0)
+            {
+                if (Dialogs.ConfirmDelete == DialogResult.No) { return; };
+            }
+            db.Delete(this);
+        }
 
         public override string ToString()
         {
             string value = Name;
-            //value += DefaultQuantityType == null ? "" : " (" + DefaultQuantityType + ")";
-            //value += (IsCarb ? " [C]" : IsProtein ? " [P]" : "");
             return value;
         }
 

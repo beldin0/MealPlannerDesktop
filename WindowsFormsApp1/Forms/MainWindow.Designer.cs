@@ -17,6 +17,11 @@
             {
                 components.Dispose();
             }
+            if (MasterContext != null)
+            {
+                MasterContext.Dispose();
+                MasterContext = null;
+            }
             base.Dispose(disposing);
         }
 
@@ -56,7 +61,7 @@
             this.btnMeals.TabIndex = 1;
             this.btnMeals.Text = "Manage Meals";
             this.btnMeals.UseVisualStyleBackColor = true;
-            this.btnMeals.Click += new System.EventHandler(this.btnMeals_Click);
+            this.btnMeals.Click += new System.EventHandler(this.MealsButton_Click);
             // 
             // button1
             // 
@@ -68,7 +73,7 @@
             this.button1.TabIndex = 2;
             this.button1.Text = "Make a plan";
             this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.button1.Click += new System.EventHandler(this.PlanButton_Click);
             // 
             // btnEveryWeek
             // 
@@ -80,7 +85,7 @@
             this.btnEveryWeek.TabIndex = 3;
             this.btnEveryWeek.Text = "Every Week Items";
             this.btnEveryWeek.UseVisualStyleBackColor = true;
-            this.btnEveryWeek.Click += new System.EventHandler(this.btnEveryWeek_Click);
+            this.btnEveryWeek.Click += new System.EventHandler(this.EveryWeekButton_Click);
             // 
             // MainWindow
             // 
@@ -93,8 +98,10 @@
             this.Controls.Add(this.Ingredients);
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "MainWindow";
-            this.Text = "Meal Planner";
+            this.Text = "Meal Planner 1.3";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainWindow_FormClosing);
+            this.Load += new System.EventHandler(this.MainWindow_Load);
+            this.VisibleChanged += new System.EventHandler(this.MainWindow_VisibleChanged);
             this.ResumeLayout(false);
 
         }

@@ -56,7 +56,7 @@
             this.lstAvailable.Size = new System.Drawing.Size(230, 199);
             this.lstAvailable.Sorted = true;
             this.lstAvailable.TabIndex = 0;
-            this.lstAvailable.DoubleClick += new System.EventHandler(this.btnAdd_Click);
+            this.lstAvailable.DoubleClick += new System.EventHandler(this.AddButton_Click);
             // 
             // label1
             // 
@@ -89,7 +89,7 @@
             this.lstUsed.Size = new System.Drawing.Size(230, 199);
             this.lstUsed.Sorted = true;
             this.lstUsed.TabIndex = 2;
-            this.lstUsed.DoubleClick += new System.EventHandler(this.btnRemove_Click);
+            this.lstUsed.DoubleClick += new System.EventHandler(this.RemoveButton_Click);
             // 
             // lblWarn1
             // 
@@ -178,7 +178,7 @@
             this.btnCancel.TabIndex = 17;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
-            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+            this.btnCancel.Click += new System.EventHandler(this.CancelButton_Click);
             // 
             // btnOk
             // 
@@ -190,7 +190,7 @@
             this.btnOk.TabIndex = 16;
             this.btnOk.Text = "OK";
             this.btnOk.UseVisualStyleBackColor = true;
-            this.btnOk.Click += new System.EventHandler(this.btnOk_Click);
+            this.btnOk.Click += new System.EventHandler(this.OkButton_Click);
             // 
             // btnAdd
             // 
@@ -202,7 +202,7 @@
             this.btnAdd.TabIndex = 18;
             this.btnAdd.Text = "->";
             this.btnAdd.UseVisualStyleBackColor = true;
-            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
+            this.btnAdd.Click += new System.EventHandler(this.AddButton_Click);
             // 
             // btnRemove
             // 
@@ -214,7 +214,7 @@
             this.btnRemove.TabIndex = 19;
             this.btnRemove.Text = "<-";
             this.btnRemove.UseVisualStyleBackColor = true;
-            this.btnRemove.Click += new System.EventHandler(this.btnRemove_Click);
+            this.btnRemove.Click += new System.EventHandler(this.RemoveButton_Click);
             // 
             // btnAddIngredient
             // 
@@ -226,7 +226,7 @@
             this.btnAddIngredient.TabIndex = 20;
             this.btnAddIngredient.Text = "Add";
             this.btnAddIngredient.UseVisualStyleBackColor = true;
-            this.btnAddIngredient.Click += new System.EventHandler(this.btnAddIngredient_Click);
+            this.btnAddIngredient.Click += new System.EventHandler(this.AddIngredientButton_Click);
             // 
             // textBox1
             // 
@@ -234,7 +234,7 @@
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(230, 20);
             this.textBox1.TabIndex = 21;
-            this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
+            this.textBox1.TextChanged += new System.EventHandler(this.TextBox_TextChanged);
             // 
             // AddMeal
             // 

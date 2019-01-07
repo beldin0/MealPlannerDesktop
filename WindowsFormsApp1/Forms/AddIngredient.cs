@@ -1,13 +1,6 @@
 ﻿using MealPlannerApp.Classes;
 using MealPlannerApp.EFClasses;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace MealPlannerApp.Forms
@@ -15,7 +8,7 @@ namespace MealPlannerApp.Forms
     public partial class AddIngredient : Form
     {
         internal Wrapper<bool> ReturnedBool;
-        internal MealPlannerContext db;
+        private IMealPlannerContext DbContext;
 
         // Field to hold incoming ingredient in the case of an Edit rather than Add
         internal Ingredient StarterIngredient;
@@ -23,8 +16,9 @@ namespace MealPlannerApp.Forms
         // Property to set the ingredient name directly (e.g. adding from filter box)
         internal string IngredientName { set { txtName.Text = value.ToProper(); } }
 
-        public AddIngredient()
+        public AddIngredient(IMealPlannerContext db)
         {
+            DbContext = db;
             InitializeComponent();
         }
 
@@ -55,7 +49,7 @@ namespace MealPlannerApp.Forms
                 StarterIngredient.DefaultQuantityType = txtUnits.Text == "" ? null : txtUnits.Text;
                 StarterIngredient.IsCarb = chkCarb.Checked;
                 StarterIngredient.IsProtein = chkProtein.Checked;
-                db.Add(StarterIngredient);
+                DbContext.Add(StarterIngredient);
             }
             else
             {
@@ -63,7 +57,7 @@ namespace MealPlannerApp.Forms
                 StarterIngredient.DefaultQuantityType = txtUnits.Text == "" ? null : txtUnits.Text;
                 StarterIngredient.IsCarb = chkCarb.Checked;
                 StarterIngredient.IsProtein = chkProtein.Checked;
-                db.SaveChanges();
+                DbContext.SaveChanges();
             }
             ReturnedBool.Value = true;
             Close();
@@ -79,11 +73,6 @@ namespace MealPlannerApp.Forms
                 chkCarb.Checked = StarterIngredient.IsCarb;
                 chkProtein.Checked = StarterIngredient.IsProtein;
             }
-        }
-
-        private void AddIngredient_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            db.Dispose();
         }
     }
 }

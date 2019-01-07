@@ -8,6 +8,7 @@ namespace MealPlannerApp.Classes
     public class MealSuggester
     {
         private Dictionary<Ingredient, List<Meal>> SuggestionsDictionary { get; set; }
+        private Ingredient LastSuggestion = Ingredient.NULL;
 
         public MealSuggester(List<Meal> Meals)
         {
@@ -19,7 +20,12 @@ namespace MealPlannerApp.Classes
             Random rand = new Random();
             List<Ingredient> values = Enumerable.ToList(SuggestionsDictionary.Keys);
             int size = SuggestionsDictionary.Count;
-            Ingredient ChosenIngredient = values[rand.Next(size)];
+            Ingredient ChosenIngredient;
+            do
+            {
+                ChosenIngredient = values[rand.Next(size)];
+            } while (ChosenIngredient.Equals(LastSuggestion));
+            LastSuggestion = ChosenIngredient;
             var entry = new KeyValuePair<Ingredient, List<Meal>>
                 (ChosenIngredient, SuggestionsDictionary[ChosenIngredient]);
             return entry;

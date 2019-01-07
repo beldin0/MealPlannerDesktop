@@ -11,16 +11,18 @@ namespace MealPlannerApp.Forms
 {
     public partial class Plan : Form
     {
-        MealPlannerContext db = new MealPlannerContext();
+        private IMealPlannerContext db;
         public Form MyParent { get; set; }
         private List<Meal> plan = new List<Meal>();
         private DataTable dataTable;
         private IEnumerable<Meal> Meals;
         private List<Meal> AvailableMeals => Meals.Except(plan).ToList();
+        IEnumerable<Label> MealLabels => Controls.OfType<Label>().Take(7).Reverse();
 
-        public Plan()
+        public Plan(IMealPlannerContext db)
         {
             InitializeComponent();
+            this.db = db;
             FillMealList();
             dataGridView1.DataSource = dataTable;
             dataGridView1.Sort(dataGridView1.Columns[0], ListSortDirection.Ascending);
@@ -90,13 +92,11 @@ namespace MealPlannerApp.Forms
         {
             Wrapper<bool> Bool = new Wrapper<bool>(false);
             Meal meal = Meal.NULL;
-            new AddMeal ()
+            using (AddMeal addDialog = new AddMeal (db) { ReturnedBool = Bool, StarterMeal = meal, MealName = textBox1.Text })
             {
-                ReturnedBool = Bool,
-                StarterMeal = meal,
-                MealName = textBox1.Text
+                addDialog.DbContext = db;
+                addDialog.ShowDialog();
             }
-            .ShowDialog();
             if (Bool)
             {
                 FillMealList();
@@ -107,8 +107,7 @@ namespace MealPlannerApp.Forms
 
         private void AddMealToPlan(string mealName)
         {
-            IEnumerable<Label> labels = this.Controls.OfType<Label>().Reverse();
-            foreach (Label label in labels)
+            foreach (Label label in MealLabels)
             {
                 if (label.Text == "")
                 {
@@ -150,8 +149,11 @@ namespace MealPlannerApp.Forms
                     }
                 }
             }
-            List<string> mealnames = plan.ToList().ConvertAll(meal => meal.Name);
-
+            List<string> mealnames = new List<string>();
+            foreach (Label label in MealLabels)
+            {
+                mealnames.Add(label.Text);
+            }
             new ShoppingList()
             {
                 meals = mealnames,

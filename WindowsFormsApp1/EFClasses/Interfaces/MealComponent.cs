@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MealPlannerApp.Classes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +9,7 @@ namespace MealPlannerApp
 {
     public interface IMealComponent : IComparable
     {
-        char Type();
+        void DeleteFrom(IMealPlannerContext db);
         IEnumerable<IMealComponent> GetLinkedComponents();
     }
 }

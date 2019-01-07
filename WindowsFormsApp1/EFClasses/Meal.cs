@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MealPlannerApp.Classes;
+using System;
 using System.Collections.Generic;
 
 namespace MealPlannerApp.EFClasses
@@ -40,10 +41,15 @@ namespace MealPlannerApp.EFClasses
             return Name + " [" + (Ingredients == null ? 0 : Ingredients.Count) + "]";
         }
 
-        char IMealComponent.Type()
+        public void DeleteFrom(IMealPlannerContext db)
         {
-            return 'M';
+            db.Delete(this);
         }
+
+        //char IMealComponent.Type()
+        //{
+        //    return 'M';
+        //}
 
         public IEnumerable<IMealComponent> GetLinkedComponents()
         {

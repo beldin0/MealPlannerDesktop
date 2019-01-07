@@ -32,7 +32,7 @@ namespace MealPlannerApp.Forms
                 DialogResult = DialogResult.Cancel;
                 Close();
             }
-            lblLabel.Text = "How about something with " + Source.Key.Name + "?";
+            lblLabel.Text = "How about something with " + Source.Key.Name.ToLower() + "?";
             foreach (Meal m in Source.Value)
             {
                 Button b = new Button()

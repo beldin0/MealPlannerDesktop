@@ -5,13 +5,16 @@ using System.Data.Entity;
 
 namespace MealPlannerApp.Classes
 {
-    public class MealPlannerContext : DbContext
+    public class LocalDbContext : DbContext, IMealPlannerContext
     {
-        public MealPlannerContext() : base("Data Source=" + Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\MealPlannerDb\Database.sdf")
+        public LocalDbContext() : base("Data Source=" + Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\MealPlannerDb\Database.sdf")
         {
             Configuration.LazyLoadingEnabled = false;
             Configuration.ProxyCreationEnabled = true;
         }
+
+        public new void SaveChanges() => base.SaveChanges();
+        public new void Dispose() => base.Dispose(true);
 
         public DbSet<Ingredient> Ingredients { get; set; }
         public DbSet<Meal> Meals { get; set; }
@@ -24,17 +27,6 @@ namespace MealPlannerApp.Classes
         public IEnumerable<Meal> GetMeals()
         {
             return Meals.Include("Ingredients");
-        }
-
-        public void Delete(IMealComponent mc)
-        {
-            if (mc.Type()=='M')
-            {
-                Delete((Meal)mc);
-            } else
-            {
-                Delete((Ingredient)mc);
-            }
         }
 
         public void Delete(Ingredient i)

@@ -10,7 +10,7 @@ namespace MealPlannerApp.Forms
     public partial class AddMeal : Form
     {
         internal Wrapper<bool> ReturnedBool;
-        internal MealPlannerContext db { get; set; }
+        internal IMealPlannerContext DbContext { get; set; }
 
         // Field to hold incoming meal in the case of an Edit rather than Add
         internal Meal StarterMeal;
@@ -18,23 +18,28 @@ namespace MealPlannerApp.Forms
         // Property to set the meal name directly (e.g. adding from filter box)
         public string MealName { set { this.txtName.Text = value.ToProper(); } }
 
-        public AddMeal()
+        public AddMeal(IMealPlannerContext db)
         {
             InitializeComponent();
+            DbContext = db;
             cboCookTime.DataSource = Meal.CookingTime.GetCookTimes();
         }
 
         private void ReloadIngredients(Func<Ingredient, bool> Pred = null)
         {
+            IEnumerable<Ingredient> ingredients = DbContext.GetIngredients();
             if (Pred == null) Pred = delegate (Ingredient i) { return !lstUsed.Items.OfType<Ingredient>().ToList<Ingredient>().Contains(i); };
             lstAvailable.Items.Clear();
-            foreach (var item in db.GetIngredients())
-            {
-                if (Pred(item)) lstAvailable.Items.Add(item);
-            }
+            foreach (Ingredient ingredient in ingredients)
+                {
+                    if (ingredient != null)
+                    {
+                        if (Pred(ingredient)) lstAvailable.Items.Add(ingredient);
+                    }
+                }
         }
 
-        private void btnAdd_Click(object sender, EventArgs e)
+        private void AddButton_Click(object sender, EventArgs e)
         {
             AddSelectedItem();
         }
@@ -48,7 +53,7 @@ namespace MealPlannerApp.Forms
             textBox1.Text = "";
         }
 
-        private void btnRemove_Click(object sender, EventArgs e)
+        private void RemoveButton_Click(object sender, EventArgs e)
         {
             var item = lstUsed.SelectedItem;
             if (item == null) return;
@@ -56,37 +61,41 @@ namespace MealPlannerApp.Forms
             lstUsed.Items.Remove(item);
         }
 
-        private void btnOk_Click(object sender, EventArgs e)
+        private void OkButton_Click(object sender, EventArgs e)
         {
             if (txtName.Text == null || txtName.Text == "")
             {
                 lblWarn1.Visible = true;
                 return;
             }
-            bool update = StarterMeal.Name != null; 
-            StarterMeal.Name = txtName.Text;
+            if (StarterMeal.Name != null) DbContext.Delete(StarterMeal); 
+            StarterMeal.Name = txtName.Text.ToProper();
             StarterMeal.CookTime = cboCookTime.Text;
             StarterMeal.Ingredients.Clear();
             foreach (var item in lstUsed.Items)
             {
                 StarterMeal.Ingredients.Add((Ingredient)item);
             }
-            if (!update) db.Add(StarterMeal);
-            db.SaveChanges();
+            DbContext.Add(StarterMeal);
+            DbContext.SaveChanges();
             ReturnedBool.Value = true;
             Close();
         }
 
-        private void btnCancel_Click(object sender, EventArgs e)
+        private void CancelButton_Click(object sender, EventArgs e)
         {
             Close();
         }
 
-        private void btnAddIngredient_Click(object sender, EventArgs e)
+        private void AddIngredientButton_Click(object sender, EventArgs e)
         {
             Wrapper<bool> Bool = new Wrapper<bool>(false);
             Ingredient ingredient = Ingredient.NULL;
-            new AddIngredient { ReturnedBool = Bool, StarterIngredient = ingredient, IngredientName = textBox1.Text }.ShowDialog();
+            ingredient.Name = textBox1.Text;
+            using (AddIngredient addDialog = new AddIngredient(DbContext) { ReturnedBool = Bool, StarterIngredient = ingredient })
+            {
+                addDialog.ShowDialog();
+            }
             if (Bool)
             {
                 lstUsed.Items.Add(ingredient);
@@ -108,7 +117,7 @@ namespace MealPlannerApp.Forms
             ReloadIngredients();
         }
 
-        private void textBox1_TextChanged(object sender, EventArgs e)
+        private void TextBox_TextChanged(object sender, EventArgs e)
         {
             Func<Ingredient, bool> Pred = null;
             if (textBox1.Text != "") Pred = delegate (Ingredient i) { return i.Name.ToLower().Contains(textBox1.Text.ToLower()); };
