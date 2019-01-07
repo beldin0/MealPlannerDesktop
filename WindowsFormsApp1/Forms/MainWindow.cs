@@ -51,7 +51,7 @@ namespace MealPlannerApp.Forms
             return delegate ()
             {
                 Wrapper<bool> Bool = new Wrapper<bool>(false);
-                using (AddMeal addDialog = new AddMeal { ReturnedBool = Bool, StarterMeal = m })
+                using (AddMeal addDialog = new AddMeal { ReturnedBool = Bool, StarterMeal = m, db = new MealPlannerContext() })
                 {
                     addDialog.Show();
                 }

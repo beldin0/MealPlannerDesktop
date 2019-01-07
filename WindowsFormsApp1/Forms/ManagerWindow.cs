@@ -15,19 +15,23 @@ namespace MealPlannerApp.Forms
 
         internal Predicate<IMealComponent> AddClickMethod = delegate (IMealComponent mc) { var result = Dialogs.Unimplemented; return false; };
 
-        private Predicate<IMealComponent> AddMealDelegate = delegate (IMealComponent m)
+        private Predicate<IMealComponent> AddMealDelegate => delegate (IMealComponent m)
             {
                 Wrapper<bool> Bool = new Wrapper<bool>(false);
                 if (m == null) { m = Meal.NULL; }
-                new AddMeal { ReturnedBool = Bool, StarterMeal = (Meal)m }.ShowDialog();
+                using (AddMeal addDialog = new AddMeal { ReturnedBool = Bool, StarterMeal = (Meal)m })
+                {
+                    addDialog.db = db;
+                    addDialog.Show();
+                }
                 return Bool;
             };
 
-        private Predicate<IMealComponent> AddIngredientDelegate = delegate (IMealComponent i)
+        private Predicate<IMealComponent> AddIngredientDelegate => delegate (IMealComponent i)
         {
             Wrapper<bool> Bool = new Wrapper<bool>(false);
             if (i == null) { i = Ingredient.NULL; }
-            new AddIngredient { ReturnedBool = Bool, StarterIngredient = (Ingredient)i }.ShowDialog();
+            new AddIngredient { ReturnedBool = Bool, StarterIngredient = (Ingredient)i, db = db }.ShowDialog();
             return Bool;
         };
 

@@ -30,12 +30,12 @@ namespace MealPlannerApp.Classes
             DataRow d = table.NewRow();
             d[0] = m.Name;
             d[1] = m.CookTime;
-            d[2] = m.GetProtein();
-            d[3] = m.GetCarb();
+            d[2] = string.Join(", ", m.Proteins.ConvertAll(i => i.Name));
+            d[3] = string.Join(", ", m.Carbs.ConvertAll(i => i.Name));
             table.Rows.Add(d);
         }
 
-        public static void ConcatList(this List<string> list, int maxlength = 90)
+        public static List<string> ConcatList(this List<string> list, int maxlength = 90)
         {
             List<string> copyOfList = new List<string>(list);
             list.Clear();
@@ -54,6 +54,7 @@ namespace MealPlannerApp.Classes
                 }
             }
             if (line != "") list.Add(line);
+            return list;
         }
 
         public static bool SharesIngredientsWith(this Meal meal1, Meal meal2)

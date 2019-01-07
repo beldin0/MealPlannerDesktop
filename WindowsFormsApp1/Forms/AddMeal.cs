@@ -10,7 +10,7 @@ namespace MealPlannerApp.Forms
     public partial class AddMeal : Form
     {
         internal Wrapper<bool> ReturnedBool;
-        MealPlannerContext db = new MealPlannerContext();
+        internal MealPlannerContext db { get; set; }
 
         // Field to hold incoming meal in the case of an Edit rather than Add
         internal Meal StarterMeal;
@@ -63,19 +63,16 @@ namespace MealPlannerApp.Forms
                 lblWarn1.Visible = true;
                 return;
             }
-            if (StarterMeal.Name != null)
-            {
-                db.Delete(StarterMeal);
-            }
+            bool update = StarterMeal.Name != null; 
             StarterMeal.Name = txtName.Text;
             StarterMeal.CookTime = cboCookTime.Text;
-            StarterMeal.Ingredients = new List<Ingredient>();
+            StarterMeal.Ingredients.Clear();
             foreach (var item in lstUsed.Items)
             {
                 StarterMeal.Ingredients.Add((Ingredient)item);
             }
-
-            db.Add(StarterMeal);
+            if (!update) db.Add(StarterMeal);
+            db.SaveChanges();
             ReturnedBool.Value = true;
             Close();
         }

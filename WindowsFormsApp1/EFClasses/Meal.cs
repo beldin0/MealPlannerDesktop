@@ -31,7 +31,7 @@ namespace MealPlannerApp.EFClasses
         {
             get
             {
-                return new Meal() { Name = null };
+                return new Meal() { Name = null, Ingredients = new List<Ingredient>() };
             }
         }
 
@@ -51,22 +51,30 @@ namespace MealPlannerApp.EFClasses
             return list ?? new List<Ingredient>();
         }
 
-        internal string GetCarb()
+        internal List<Ingredient> Carbs
         {
-            foreach (Ingredient i in Ingredients)
+            get
             {
-                if (i.IsCarb) return i.Name;
+                List<Ingredient> list = new List<Ingredient>();
+                foreach (Ingredient i in Ingredients)
+                {
+                    if (i.IsCarb) list.Add(i);
+                }
+                return list;
             }
-            return "";
         }
 
-        internal string GetProtein()
+        internal List<Ingredient> Proteins
         {
-            foreach (Ingredient i in Ingredients)
+            get
             {
-                if (i.IsProtein) return i.Name;
+                List<Ingredient> list = new List<Ingredient>();
+                foreach (Ingredient i in Ingredients)
+                {
+                    if (i.IsProtein) list.Add(i);
+                }
+                return list;
             }
-            return "";
         }
 
         public enum Type { Soup, Roast, }

@@ -29,8 +29,8 @@ namespace MealPlannerApp.EFClasses
         public override string ToString()
         {
             string value = Name;
-            value += DefaultQuantityType == null ? "" : " (" + DefaultQuantityType + ")";
-            value += (IsCarb ? " [C]" : IsProtein ? " [P]" : "");
+            //value += DefaultQuantityType == null ? "" : " (" + DefaultQuantityType + ")";
+            //value += (IsCarb ? " [C]" : IsProtein ? " [P]" : "");
             return value;
         }
 

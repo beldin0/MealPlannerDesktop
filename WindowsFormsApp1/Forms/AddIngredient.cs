@@ -15,7 +15,7 @@ namespace MealPlannerApp.Forms
     public partial class AddIngredient : Form
     {
         internal Wrapper<bool> ReturnedBool;
-        MealPlannerContext db;
+        internal MealPlannerContext db;
 
         // Field to hold incoming ingredient in the case of an Edit rather than Add
         internal Ingredient StarterIngredient;
@@ -26,7 +26,6 @@ namespace MealPlannerApp.Forms
         public AddIngredient()
         {
             InitializeComponent();
-            db = new MealPlannerContext();
         }
 
 
